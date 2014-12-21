@@ -1,5 +1,5 @@
-import QtQuick 2.4
-import QtQuick.Controls 1.3
+import QtQuick 2.3
+import QtQuick.Controls 1.2
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.2
@@ -184,6 +184,14 @@ ApplicationWindow {
                         width: 128
                         height: 128
                         source: "qrc:/bits/Logo_DPKG.png"
+                        MouseArea {
+                            anchors.fill:parent
+                            onClicked: {
+                                onClicked: dpkgselected.visible = true
+                                onClicked: rpmselected.visible = false
+                            }
+                        }
+
                     }
                 }
 
@@ -216,10 +224,9 @@ ApplicationWindow {
                         y: 104
                         width: 24
                         height: 24
-                        visible: false
+                        visible: true
                         source: "qrc:/bits/Progress_Checked.png"
                     }
-
                 }
 
                 Rectangle {
@@ -231,6 +238,13 @@ ApplicationWindow {
                         width: 128
                         height: 128
                         source: "qrc:/bits/Logo_RPM.png"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            onClicked: rpmselected.visible = true
+                            onClicked: dpkgselected.visible = false
+                        }
                     }
                 }
 
@@ -313,6 +327,19 @@ ApplicationWindow {
                         height: 96
                         source: "qrc:/bits/gnome-oobp.png"
                     }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            onClicked: gnomeselected.visible        = true
+                            onClicked: cinnamondescselected.visible = false
+                            onClicked: mateselected.visible         = false
+                            onClicked: xfceselected.visible         = false
+                            onClicked: unityselected.visible        = false
+                            onClicked: deepinselected.visible       = false
+                            onClicked: pantheonselected.visible     = false
+                            onClicked: kodiselected.visible         = false
+                        }
+                    }
                 }
 
                 Rectangle {
@@ -338,6 +365,15 @@ ApplicationWindow {
                         textFormat: Text.RichText
                         font.pixelSize: 15
                     }
+                    Image {
+                        id: gnomeselected
+                        x: -46
+                        y: 76
+                        width: 24
+                        height: 24
+                        visible: true
+                        source: "qrc:/bits/Progress_Checked.png"
+                    }
                 }
 
                 Rectangle {
@@ -349,6 +385,19 @@ ApplicationWindow {
                         width: 96
                         height: 96
                         source: "qrc:/bits/cinnamon-oobp.png"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            onClicked: gnomeselected.visible        = false
+                            onClicked: cinnamondescselected.visible = true
+                            onClicked: mateselected.visible         = false
+                            onClicked: xfceselected.visible         = false
+                            onClicked: unityselected.visible        = false
+                            onClicked: deepinselected.visible       = false
+                            onClicked: pantheonselected.visible     = false
+                            onClicked: kodiselected.visible         = false
+                        }
                     }
                 }
 
@@ -374,7 +423,16 @@ ApplicationWindow {
                         textFormat: Text.RichText
                         wrapMode: Text.WordWrap
                         font.pixelSize: 15
-                  }
+                    }
+                    Image {
+                        id: cinnamondescselected
+                        x: -46
+                        y: 76
+                        width: 24
+                        height: 24
+                        visible: false
+                        source: "qrc:/bits/Progress_Checked.png"
+                    }
               }
 
                 Rectangle {
@@ -386,6 +444,19 @@ ApplicationWindow {
                         width: 96
                         height: 96
                         source: "qrc:/bits/mate-oobp.png"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            onClicked: gnomeselected.visible        = false
+                            onClicked: cinnamondescselected.visible = false
+                            onClicked: mateselected.visible         = true
+                            onClicked: xfceselected.visible         = false
+                            onClicked: unityselected.visible        = false
+                            onClicked: deepinselected.visible       = false
+                            onClicked: pantheonselected.visible     = false
+                            onClicked: kodiselected.visible         = false
+                        }
                     }
                 }
 
@@ -411,7 +482,16 @@ ApplicationWindow {
                         textFormat: Text.RichText
                         wrapMode: Text.WordWrap
                         font.pixelSize: 15
-                  }
+                    }
+                    Image {
+                        id: mateselected
+                        x: -46
+                        y: 76
+                        width: 24
+                        height: 24
+                        visible: false
+                        source: "qrc:/bits/Progress_Checked.png"
+                    }
               }
 
 
@@ -424,6 +504,19 @@ ApplicationWindow {
                         width: 96
                         height: 96
                         source: "qrc:/bits/xfce-oobp.png"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            onClicked: gnomeselected.visible        = false
+                            onClicked: cinnamondescselected.visible = false
+                            onClicked: mateselected.visible         = false
+                            onClicked: xfceselected.visible         = true
+                            onClicked: unityselected.visible        = false
+                            onClicked: deepinselected.visible       = false
+                            onClicked: pantheonselected.visible     = false
+                            onClicked: kodiselected.visible         = false
+                        }
                     }
                 }
 
@@ -449,7 +542,16 @@ ApplicationWindow {
                         textFormat: Text.RichText
                         wrapMode: Text.WordWrap
                         font.pixelSize: 15
-                  }
+                    }
+                    Image {
+                        id: xfceselected
+                        x: -46
+                        y: 76
+                        width: 24
+                        height: 24
+                        visible: false
+                        source: "qrc:/bits/Progress_Checked.png"
+                    }
               }
 
                 Rectangle {
@@ -461,6 +563,19 @@ ApplicationWindow {
                         width: 96
                         height: 96
                         source: "qrc:/bits/unity-oobp.png"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            onClicked: gnomeselected.visible        = false
+                            onClicked: cinnamondescselected.visible = false
+                            onClicked: mateselected.visible         = false
+                            onClicked: xfceselected.visible         = false
+                            onClicked: unityselected.visible        = true
+                            onClicked: deepinselected.visible       = false
+                            onClicked: pantheonselected.visible     = false
+                            onClicked: kodiselected.visible         = false
+                        }
                     }
                 }
 
@@ -486,7 +601,16 @@ ApplicationWindow {
                         textFormat: Text.RichText
                         wrapMode: Text.WordWrap
                         font.pixelSize: 15
-                  }
+                    }
+                    Image {
+                        id: unityselected
+                        x: -46
+                        y: 76
+                        width: 24
+                        height: 24
+                        visible: false
+                        source: "qrc:/bits/Progress_Checked.png"
+                    }
               }
 
                 Rectangle {
@@ -498,6 +622,19 @@ ApplicationWindow {
                         width: 96
                         height: 96
                         source: "qrc:/bits/deepin-oobp.png"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            onClicked: gnomeselected.visible        = false
+                            onClicked: cinnamondescselected.visible = false
+                            onClicked: mateselected.visible         = false
+                            onClicked: xfceselected.visible         = false
+                            onClicked: unityselected.visible        = false
+                            onClicked: deepinselected.visible       = true
+                            onClicked: pantheonselected.visible     = false
+                            onClicked: kodiselected.visible         = false
+                        }
                     }
                 }
 
@@ -523,7 +660,16 @@ ApplicationWindow {
                         textFormat: Text.RichText
                         wrapMode: Text.WordWrap
                         font.pixelSize: 15
-                  }
+                    }
+                    Image {
+                        id: deepinselected
+                        x: -46
+                        y: 76
+                        width: 24
+                        height: 24
+                        visible: false
+                        source: "qrc:/bits/Progress_Checked.png"
+                    }
               }
 
                 Rectangle {
@@ -535,6 +681,19 @@ ApplicationWindow {
                         width: 96
                         height: 96
                         source: "qrc:/bits/pantheon-oobp.png"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            onClicked: gnomeselected.visible        = false
+                            onClicked: cinnamondescselected.visible = false
+                            onClicked: mateselected.visible         = false
+                            onClicked: xfceselected.visible         = false
+                            onClicked: unityselected.visible        = false
+                            onClicked: deepinselected.visible       = false
+                            onClicked: pantheonselected.visible     = true
+                            onClicked: kodiselected.visible         = false
+                        }
                     }
                 }
 
@@ -560,7 +719,16 @@ ApplicationWindow {
                         textFormat: Text.RichText
                         wrapMode: Text.WordWrap
                         font.pixelSize: 15
-                  }
+                    }
+                    Image {
+                        id: pantheonselected
+                        x: -46
+                        y: 76
+                        width: 24
+                        height: 24
+                        visible: false
+                        source: "qrc:/bits/Progress_Checked.png"
+                    }
               }
 
                 Rectangle {
@@ -572,6 +740,19 @@ ApplicationWindow {
                         width: 96
                         height: 96
                         source: "qrc:/bits/kodi-oobp.png"
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            onClicked: gnomeselected.visible        = false
+                            onClicked: cinnamondescselected.visible = false
+                            onClicked: mateselected.visible         = false
+                            onClicked: xfceselected.visible         = false
+                            onClicked: unityselected.visible        = false
+                            onClicked: deepinselected.visible       = false
+                            onClicked: pantheonselected.visible     = false
+                            onClicked: kodiselected.visible         = true
+                        }
                     }
                 }
 
@@ -597,11 +778,20 @@ ApplicationWindow {
                         textFormat: Text.RichText
                         wrapMode: Text.WordWrap
                         font.pixelSize: 15
-                  }
+                    }
+                    Image {
+                        id: kodiselected
+                        x: -46
+                        y: 76
+                        width: 24
+                        height: 24
+                        visible: false
+                        source: "qrc:/bits/Progress_Checked.png"
+                    }
               }
             }
 
-            MouseArea {
+            /*MouseArea {
                 id: selectdpkg
                 x: 56
                 y: 710
@@ -611,19 +801,20 @@ ApplicationWindow {
                     onClicked: dpkgselected.visible = true
                     onClicked: rpmselected.visible = false
                 }
-            }
+            }*/
 
-            MouseArea {
+            /*MouseArea {
                 id: selectrpm
                 x: 56
                 y: 860
                 width: 870
                 height: 128
+
                 onClicked: {
                     onClicked: rpmselected.visible = true
                     onClicked: dpkgselected.visible = false
                 }
-            }
+            }*/
 
         }
 
