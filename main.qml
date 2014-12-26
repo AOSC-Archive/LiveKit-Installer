@@ -18,7 +18,7 @@ ApplicationWindow {
         y: 0
         width: 1024
         height: 128
-        property variant clickPos: "1,1"
+        property string clickPos: "1,1"
 
         onPressed: {
             clickPos  = Qt.point(mouse.x,mouse.y)
