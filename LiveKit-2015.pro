@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets
+QT += qml quick widgets declarative core
 
 SOURCES += main.cpp \
     installercore.cpp

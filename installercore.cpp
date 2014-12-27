@@ -1,18 +1,28 @@
 #include "installercore.h"
+#include <QDebug>
+#include <stdio.h>
 
 InstallerCore::InstallerCore(QObject *parent) :
     QObject(parent)
 {
 }
 
-void InstallerCore::SetDesktopEnvironment(QString DE){
+void InstallerCore::setDesktopEnvironment(QString DE){
+    qDebug() << DE << "is selected!";
     if      (DE == "GNOME"){
-        //  Todos:  use GNOME
-    }// others
+    }else if(DE == "CINNAMON"){
+    }else if(DE == "DEEPIN"){
+    }else if(DE == "KODI"){
+    }else if(DE == "MATE"){
+    }else if(DE == "PANTHEON"){
+    }else if(DE == "UNITY"){
+    }else if(DE == "XFCE"){
+    }
 }
 
-void InstallerCore::SetPackageManager(QString PM){
+void InstallerCore::setPackageManager(QString PM){
+    qDebug() << PM << "is selected!" << endl;
     if      (PM == "DPKG"){
-        //  Todos:  use APT/DPKG
+    }else if(PM == "RPM"){
     }
 }

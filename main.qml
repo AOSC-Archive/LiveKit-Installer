@@ -18,7 +18,7 @@ ApplicationWindow {
         y: 0
         width: 1024
         height: 128
-        property string clickPos: "1,1"
+        property var clickPos: "1,1"
 
         onPressed: {
             clickPos  = Qt.point(mouse.x,mouse.y)
@@ -338,6 +338,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kodiselected.visible         = false
+                            Core.setDesktopEnvironment("GNOME")         // FSCK QT!
                         }
                     }
                 }
@@ -397,6 +398,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kodiselected.visible         = false
+                            Core.setDesktopEnvironment("CINNAMON")
                         }
                     }
                 }
@@ -456,6 +458,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kodiselected.visible         = false
+                            Core.setDesktopEnvironment("MATE")
                         }
                     }
                 }
@@ -516,6 +519,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kodiselected.visible         = false
+                            Core.setDesktopEnvironment("XFCE")
                         }
                     }
                 }
@@ -575,6 +579,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kodiselected.visible         = false
+                            Core.setDesktopEnvironment("UNITY")
                         }
                     }
                 }
@@ -634,6 +639,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = true
                             onClicked: pantheonselected.visible     = false
                             onClicked: kodiselected.visible         = false
+                            Core.setDesktopEnvironment("DEEPIN")
                         }
                     }
                 }
@@ -693,6 +699,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = true
                             onClicked: kodiselected.visible         = false
+                            Core.setDesktopEnvironment("PANTHEON")
                         }
                     }
                 }
@@ -752,6 +759,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kodiselected.visible         = true
+                            Core.setDesktopEnvironment("KODI")
                         }
                     }
                 }
