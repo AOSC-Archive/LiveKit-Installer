@@ -224,7 +224,7 @@ ApplicationWindow {
                         y: 104
                         width: 24
                         height: 24
-                        visible: true
+                        visible: false
                         source: "qrc:/bits/Progress_Checked.png"
                     }
                 }
@@ -372,7 +372,7 @@ ApplicationWindow {
                         y: 76
                         width: 24
                         height: 24
-                        visible: true
+                        visible: false
                         source: "qrc:/bits/Progress_Checked.png"
                     }
                 }
