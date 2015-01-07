@@ -45,7 +45,7 @@ ApplicationWindow {
             y: 16
             width: 96
             height: 96
-            source: "qrc:/bits/SysLogo_Desktop.png"
+            source: "qrc:/img/SysLogo_Desktop.png"
         }
 
         Image {
@@ -54,7 +54,7 @@ ApplicationWindow {
             y: 16
             width: 24
             height: 24
-            source: "qrc:/bits/Progress_Error.png"
+            source: "qrc:/img/Progress_Error.png"
         }
 
         MouseArea {

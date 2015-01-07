@@ -45,7 +45,7 @@ ApplicationWindow {
             y: 16
             width: 96
             height: 96
-            source: "qrc:/bits/SysLogo_Desktop.png"
+            source: "qrc:/img/SysLogo_Desktop.png"
         }
 
         Image {
@@ -54,7 +54,7 @@ ApplicationWindow {
             y: 16
             width: 24
             height: 24
-            source: "qrc:/bits/Progress_Error.png"
+            source: "qrc:/img/Progress_Error.png"
         }
 
         MouseArea {
@@ -183,7 +183,7 @@ ApplicationWindow {
                         id: dpkglogo
                         width: 128
                         height: 128
-                        source: "qrc:/bits/Logo_DPKG.png"
+                        source: "qrc:/img/Logo_DPKG.png"
                         MouseArea {
                             anchors.fill:parent
                             onClicked: {
@@ -225,7 +225,7 @@ ApplicationWindow {
                         width: 24
                         height: 24
                         visible: false
-                        source: "qrc:/bits/Progress_Checked.png"
+                        source: "qrc:/img/Progress_Checked.png"
                     }
                 }
 
@@ -237,7 +237,7 @@ ApplicationWindow {
                         id: rpmlogo
                         width: 128
                         height: 128
-                        source: "qrc:/bits/Logo_RPM.png"
+                        source: "qrc:/img/Logo_RPM.png"
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -278,7 +278,7 @@ ApplicationWindow {
                         width: 24
                         height: 24
                         visible: false
-                        source: "qrc:/bits/Progress_Checked.png"
+                        source: "qrc:/img/Progress_Checked.png"
                     }
                 }
             }
@@ -325,7 +325,7 @@ ApplicationWindow {
                         id: gnomelogo
                         width: 96
                         height: 96
-                        source: "qrc:/bits/gnome-oobp.png"
+                        source: "qrc:/img/gnome-oobp.png"
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -373,7 +373,7 @@ ApplicationWindow {
                         width: 24
                         height: 24
                         visible: false
-                        source: "qrc:/bits/Progress_Checked.png"
+                        source: "qrc:/img/Progress_Checked.png"
                     }
                 }
 
@@ -385,7 +385,7 @@ ApplicationWindow {
                         id: cinnamonlogo
                         width: 96
                         height: 96
-                        source: "qrc:/bits/cinnamon-oobp.png"
+                        source: "qrc:/img/cinnamon-oobp.png"
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -433,7 +433,7 @@ ApplicationWindow {
                         width: 24
                         height: 24
                         visible: false
-                        source: "qrc:/bits/Progress_Checked.png"
+                        source: "qrc:/img/Progress_Checked.png"
                     }
               }
 
@@ -445,7 +445,7 @@ ApplicationWindow {
                         id: matelogo
                         width: 96
                         height: 96
-                        source: "qrc:/bits/mate-oobp.png"
+                        source: "qrc:/img/mate-oobp.png"
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -493,7 +493,7 @@ ApplicationWindow {
                         width: 24
                         height: 24
                         visible: false
-                        source: "qrc:/bits/Progress_Checked.png"
+                        source: "qrc:/img/Progress_Checked.png"
                     }
               }
 
@@ -506,7 +506,7 @@ ApplicationWindow {
                         id: xfcelogo
                         width: 96
                         height: 96
-                        source: "qrc:/bits/xfce-oobp.png"
+                        source: "qrc:/img/xfce-oobp.png"
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -554,7 +554,7 @@ ApplicationWindow {
                         width: 24
                         height: 24
                         visible: false
-                        source: "qrc:/bits/Progress_Checked.png"
+                        source: "qrc:/img/Progress_Checked.png"
                     }
               }
 
@@ -566,7 +566,7 @@ ApplicationWindow {
                         id: unitylogo
                         width: 96
                         height: 96
-                        source: "qrc:/bits/unity-oobp.png"
+                        source: "qrc:/img/unity-oobp.png"
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -614,7 +614,7 @@ ApplicationWindow {
                         width: 24
                         height: 24
                         visible: false
-                        source: "qrc:/bits/Progress_Checked.png"
+                        source: "qrc:/img/Progress_Checked.png"
                     }
               }
 
@@ -626,7 +626,7 @@ ApplicationWindow {
                         id: deepinlogo
                         width: 96
                         height: 96
-                        source: "qrc:/bits/deepin-oobp.png"
+                        source: "qrc:/img/deepin-oobp.png"
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -674,7 +674,7 @@ ApplicationWindow {
                         width: 24
                         height: 24
                         visible: false
-                        source: "qrc:/bits/Progress_Checked.png"
+                        source: "qrc:/img/Progress_Checked.png"
                     }
               }
 
@@ -686,7 +686,7 @@ ApplicationWindow {
                         id: pantheonlogo
                         width: 96
                         height: 96
-                        source: "qrc:/bits/pantheon-oobp.png"
+                        source: "qrc:/img/pantheon-oobp.png"
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -734,7 +734,7 @@ ApplicationWindow {
                         width: 24
                         height: 24
                         visible: false
-                        source: "qrc:/bits/Progress_Checked.png"
+                        source: "qrc:/img/Progress_Checked.png"
                     }
               }
 
@@ -746,7 +746,7 @@ ApplicationWindow {
                         id: kodiogo
                         width: 96
                         height: 96
-                        source: "qrc:/bits/kodi-oobp.png"
+                        source: "qrc:/img/kodi-oobp.png"
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -794,7 +794,7 @@ ApplicationWindow {
                         width: 24
                         height: 24
                         visible: false
-                        source: "qrc:/bits/Progress_Checked.png"
+                        source: "qrc:/img/Progress_Checked.png"
                     }
               }
             }
