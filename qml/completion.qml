@@ -37,7 +37,7 @@ ApplicationWindow {
         y: 0
         width: 1024
         height: 128
-        color: "#474747"
+        color: "#00ad6a"
 
         Image {
             id: syslogo

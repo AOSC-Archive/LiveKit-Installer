@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     app.setApplicationVersion("0.0.1");
     app.setOrganizationName("Anthon Open Source Community");
 
-    QQmlApplicationEngine engine(QUrl("qrc:/qml/completion.qml"));
+    QQmlApplicationEngine engine(QUrl("qrc:/qml/start.qml"));
 
     InstallerCore Core;
 
