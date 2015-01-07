@@ -16,5 +16,6 @@
         <file>img/deepin-oobp.png</file>
         <file>img/kodi-oobp.png</file>
         <file>img/pantheon-oobp.png</file>
+        <file>img/Progress_Working.png</file>
     </qresource>
 </RCC>

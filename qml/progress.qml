@@ -70,11 +70,145 @@ ApplicationWindow {
     }
 
     ProgressBar {
-        id: progressBar1
+        id: installProgress
         x: 50
-        y: 217
-        width: 942
+        y: 250
+        width: 924
         value: 0.4
     }
 
-}
+    Text {
+        id: title
+        x: 50
+        y: 170
+        color: "#666666"
+        text: qsTr("Installation In Progress...")
+        font.bold: true
+        font.pixelSize: 36
+    }
+
+    Text {
+        id: ouput
+        x: 50
+        y: 280
+        width: 924
+        height: 16
+        color: "#666666"
+        text: qsTr("Output Foo")
+        font.pixelSize: 14
+    }
+
+    Image {
+        id: progressStage1
+        x: 50
+        y: 360
+        width: 28
+        height: 28
+        source: "qrc:/img/Progress_Working.png"
+    }
+
+    Image {
+        id: progressStage2
+        x: 50
+        y: 400
+        width: 28
+        height: 28
+        source: "qrc:/img/Progress_Working.png"
+    }
+
+    Image {
+        id: progressStage3
+        x: 50
+        y: 440
+        width: 28
+        height: 28
+        source: "qrc:/img/Progress_Working.png"
+    }
+
+    Image {
+        id: progressStage4
+        x: 50
+        y: 480
+        width: 28
+        height: 28
+        source: "qrc:/img/Progress_Working.png"
+    }
+
+    Image {
+        id: progressStage5
+        x: 50
+        y: 520
+        width: 28
+        height: 28
+        source: "qrc:/img/Progress_Working.png"
+    }
+
+    Text {
+        id: downloading
+        x: 130
+        y: 365
+        width: 844
+        height: 16
+        color: "#666666"
+        text: qsTr("Downloading system release...")
+        font.pixelSize: 14
+        }
+
+    Text {
+        id: unpack
+        x: 130
+        y: 405
+        width: 844
+        height: 16
+        color: "#666666"
+        text: qsTr("Unpacking system tarball...")
+        font.pixelSize: 14
+        }
+
+    Text {
+        id: update
+        x: 130
+        y: 445
+        width: 844
+        height: 16
+        color: "#666666"
+        text: qsTr("Updating system...")
+        font.pixelSize: 14
+        }
+
+    Text {
+        id: option
+        x: 130
+        y: 485
+        width: 844
+        height: 16
+        color: "#666666"
+        text: qsTr("Installing optional features...")
+        font.pixelSize: 14
+        }
+
+    Text {
+        id: configuration
+        x: 130
+        y: 525
+        width: 844
+        height: 16
+        color: "#666666"
+        text: qsTr("Performing post-installation configuration...")
+        font.pixelSize: 14
+        }
+
+    Text {
+        id: notice
+        x: 50
+        y: 585
+        width: 924
+        color: "#666666"
+        text: "Please sit back and have a cup of tea. Depending on the performance of your machine and the speed of Internet connection,
+                    setup can take a while to finish. Generally by installing a GNOME system build and install all the optional features available,
+                    setup can take up to 30 minutes with a 10 Mbps Internet connection and a relatively new computer with a solid state drive."
+        font.pointSize: 10
+        textFormat: Text.RichText
+        wrapMode: Text.WordWrap
+        }
+    }
