@@ -1,0 +1,20 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/start.qml</file>
+        <file>qml/progess.qml</file>
+        <file>img/close.png</file>
+        <file>img/SysLogo_Desktop.png</file>
+        <file>img/Progress_Error.png</file>
+        <file>img/Logo_DPKG.png</file>
+        <file>img/Logo_RPM.png</file>
+        <file>img/Progress_Checked.png</file>
+        <file>img/gnome-oobp.png</file>
+        <file>img/cinnamon-oobp.png</file>
+        <file>img/mate-oobp.png</file>
+        <file>img/xfce-oobp.png</file>
+        <file>img/unity-oobp.png</file>
+        <file>img/deepin-oobp.png</file>
+        <file>img/kodi-oobp.png</file>
+        <file>img/pantheon-oobp.png</file>
+    </qresource>
+</RCC>
