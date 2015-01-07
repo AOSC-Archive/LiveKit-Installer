@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file>qml/start.qml</file>
         <file>qml/progress.qml</file>
+	<file>qml/completion.qml</file>
         <file>img/close.png</file>
         <file>img/SysLogo_Desktop.png</file>
         <file>img/Progress_Error.png</file>

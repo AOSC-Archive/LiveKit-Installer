@@ -36,3 +36,6 @@ unix {
     icon.path = $$DATADIR/icons/hicolor/256x256
     icon.files += images/$${TARGET}.png
 }
+
+DISTFILES += \
+    qml/completion.qml

@@ -6,7 +6,7 @@ import QtQuick.Controls.Styles 1.2
 
 ApplicationWindow {
     id: livekitwindow
-    title: qsTr("AOSC LiveKit")
+    title: qsTr("LiveKit Installer")
     width: 1024
     height: 720
     visible: true
@@ -71,7 +71,7 @@ ApplicationWindow {
 
     ProgressBar {
         id: installProgress
-        x: 50
+        x: 56
         y: 250
         width: 924
         value: 0.4
@@ -79,7 +79,7 @@ ApplicationWindow {
 
     Text {
         id: title
-        x: 50
+        x: 56
         y: 170
         color: "#666666"
         text: qsTr("Installation In Progress...")
@@ -89,7 +89,7 @@ ApplicationWindow {
 
     Text {
         id: ouput
-        x: 50
+        x: 56
         y: 280
         width: 924
         height: 16
@@ -100,7 +100,7 @@ ApplicationWindow {
 
     Image {
         id: progressStage1
-        x: 50
+        x: 56
         y: 360
         width: 28
         height: 28
@@ -109,7 +109,7 @@ ApplicationWindow {
 
     Image {
         id: progressStage2
-        x: 50
+        x: 56
         y: 400
         width: 28
         height: 28
@@ -118,7 +118,7 @@ ApplicationWindow {
 
     Image {
         id: progressStage3
-        x: 50
+        x: 56
         y: 440
         width: 28
         height: 28
@@ -127,7 +127,7 @@ ApplicationWindow {
 
     Image {
         id: progressStage4
-        x: 50
+        x: 56
         y: 480
         width: 28
         height: 28
@@ -136,7 +136,7 @@ ApplicationWindow {
 
     Image {
         id: progressStage5
-        x: 50
+        x: 56
         y: 520
         width: 28
         height: 28
@@ -200,7 +200,7 @@ ApplicationWindow {
 
     Text {
         id: notice
-        x: 50
+        x: 56
         y: 585
         width: 924
         color: "#666666"
