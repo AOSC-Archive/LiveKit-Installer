@@ -3,8 +3,9 @@
 #include <stdio.h>
 
 InstallerCore::InstallerCore(QObject *parent) :
-    QObject(parent)
-{
+    QObject(parent){
+    systemThread = new F_systemThread(this);
+    systemThread->setExecCommand("sudo gparted");
 }
 
 void InstallerCore::setDesktopEnvironment(QString DE){
@@ -25,4 +26,24 @@ void InstallerCore::setPackageManager(QString PM){
     if      (PM == "DPKG"){
     }else if(PM == "RPM"){
     }
+}
+
+void InstallerCore::launchGparted(){
+    if(systemThread->isRunning()){
+        systemThread->terminate();
+        system("sudo killall gparted gpartedbin");
+    }
+    systemThread->start();
+}
+
+F_systemThread::F_systemThread(QObject *parent):
+    QThread(parent){
+    ExecCommand = NULL;
+}
+
+void F_systemThread::setExecCommand(char *Cmd){
+    if(ExecCommand)
+        delete ExecCommand;
+    ExecCommand = new char[strlen(Cmd) + 1];
+    strncpy(ExecCommand,Cmd,strlen(Cmd));
 }

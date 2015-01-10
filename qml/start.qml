@@ -799,30 +799,32 @@ ApplicationWindow {
               }
             }
 
-            /*MouseArea {
-                id: selectdpkg
+            Grid {
                 x: 56
-                y: 710
-                width: 870
-                height: 128
-                onClicked: {
-                    onClicked: dpkgselected.visible = true
-                    onClicked: rpmselected.visible = false
-                }
-            }*/
+                y: 1800
+                columns: 4
+                spacing: 2
+                Rectangle{
+                    width: 300
+                    height: 200
+                    color: "red"
+                    Text{
+                        y: 33
+                        id: launchGpartedText
+                        text: qsTr("点我打开gparted XD")
+                        font.family: "Sans"
+                        textFormat: Text.RichText
+                        font.pixelSize: 15
+                    }
 
-            /*MouseArea {
-                id: selectrpm
-                x: 56
-                y: 860
-                width: 870
-                height: 128
-
-                onClicked: {
-                    onClicked: rpmselected.visible = true
-                    onClicked: dpkgselected.visible = false
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {
+                            Core.launchGparted()
+                        }
+                    }
                 }
-            }*/
+            }
 
         }
 

@@ -39,3 +39,4 @@ unix {
 
 DISTFILES += \
     qml/completion.qml
+
