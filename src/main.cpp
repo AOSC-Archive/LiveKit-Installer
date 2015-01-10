@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     InstallerCore Core;
 
     QObject* topLevel = engine.rootObjects().value(0);
+    engine.rootContext()->setContextProperty("Core",&Core);
     QQuickWindow* window = qobject_cast<QQuickWindow *>(topLevel);
     if (!window) {
         qWarning("ERROR: Your root item has to be a Window");
