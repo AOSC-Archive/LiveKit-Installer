@@ -38,12 +38,8 @@ void InstallerCore::launchGparted(){
 
 F_systemThread::F_systemThread(QObject *parent):
     QThread(parent){
-    ExecCommand = NULL;
 }
 
-void F_systemThread::setExecCommand(char *Cmd){
-    if(ExecCommand)
-        delete ExecCommand;
-    ExecCommand = new char[strlen(Cmd) + 1];
-    strncpy(ExecCommand,Cmd,strlen(Cmd));
+void F_systemThread::setExecCommand(QString Cmd){
+    ExecCommand = Cmd;
 }
