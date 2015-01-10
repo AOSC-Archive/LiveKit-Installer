@@ -7,6 +7,7 @@
 
 #ifndef LIVEKIT_DEF
 #define LIVEKIT_DEF
+    #define DEFAULT     0
     #define DE_GNOME    1
     #define DE_CINNAMON 2
     #define DE_DEEPIN   3
@@ -15,6 +16,8 @@
     #define DE_PANTHEON 6
     #define DE_UNITY    7
     #define DE_XFCE     8
+    #define DPKG        9
+    #define RPM         10
 #endif
 
 class F_systemThread : public QThread{  // Function systenm() thread
@@ -50,6 +53,8 @@ public slots:
     }
 protected:
      F_systemThread *systemThread;
+     int DesktopEnvironment;
+     int PackageManager;
 
 };
 
