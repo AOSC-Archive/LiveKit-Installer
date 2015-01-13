@@ -11,7 +11,7 @@
     #define DE_GNOME    1
     #define DE_CINNAMON 2
     #define DE_DEEPIN   3
-    #define DE_KODI     4
+    #define DE_KDE     4
     #define DE_MATE     5
     #define DE_PANTHEON 6
     #define DE_UNITY    7
@@ -40,7 +40,7 @@ class InstallerCore : public QObject{
 public:
     explicit InstallerCore(QObject *parent = 0);
     ~InstallerCore(){
-        system("sudo killall gparted gpartedbin");
+//        system("sudo killall gparted gpartedbin");
     }
     Q_INVOKABLE void    setDesktopEnvironment(QString);
     Q_INVOKABLE void    setPackageManager(QString);

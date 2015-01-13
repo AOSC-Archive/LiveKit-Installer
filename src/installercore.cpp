@@ -5,7 +5,7 @@
 InstallerCore::InstallerCore(QObject *parent) :
     QObject(parent){
     systemThread = new F_systemThread(this);
-    systemThread->setExecCommand("sudo gparted");
+//    systemThread->setExecCommand("sudo gparted");
     DesktopEnvironment  = DEFAULT;
     PackageManager      = DEFAULT;
 }
@@ -18,8 +18,8 @@ void InstallerCore::setDesktopEnvironment(QString DE){
         DesktopEnvironment = DE_CINNAMON;
     }else if(DE == "DEEPIN"){
         DesktopEnvironment = DE_DEEPIN;
-    }else if(DE == "KODI"){
-        DesktopEnvironment = DE_KODI;
+    }else if(DE == "KDE"){
+        DesktopEnvironment = DE_KDE;
     }else if(DE == "MATE"){
         DesktopEnvironment = DE_MATE;
     }else if(DE == "PANTHEON"){
@@ -43,7 +43,7 @@ void InstallerCore::setPackageManager(QString PM){
 void InstallerCore::launchGparted(){
     if(systemThread->isRunning()){
         systemThread->terminate();
-        system("sudo killall gparted gpartedbin");
+//        system("sudo killall gparted gpartedbin");
     }
     systemThread->start();
 }

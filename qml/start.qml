@@ -75,6 +75,11 @@ ApplicationWindow {
         width: 1024
         height: 592
 
+
+        style: ScrollViewStyle {
+            transientScrollBars: true
+        }
+
         Rectangle {
             x: 0
             y: 0
@@ -337,7 +342,7 @@ ApplicationWindow {
                             onClicked: unityselected.visible        = false
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
-                            onClicked: kodiselected.visible         = false
+                            onClicked: kdeselected.visible         = false
                             Core.setDesktopEnvironment("GNOME")         // FSCK QT!
                         }
                     }
@@ -397,7 +402,7 @@ ApplicationWindow {
                             onClicked: unityselected.visible        = false
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
-                            onClicked: kodiselected.visible         = false
+                            onClicked: kdeselected.visible         = false
                             Core.setDesktopEnvironment("CINNAMON")
                         }
                     }
@@ -457,7 +462,7 @@ ApplicationWindow {
                             onClicked: unityselected.visible        = false
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
-                            onClicked: kodiselected.visible         = false
+                            onClicked: kdeselected.visible         = false
                             Core.setDesktopEnvironment("MATE")
                         }
                     }
@@ -518,7 +523,7 @@ ApplicationWindow {
                             onClicked: unityselected.visible        = false
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
-                            onClicked: kodiselected.visible         = false
+                            onClicked: kdeselected.visible         = false
                             Core.setDesktopEnvironment("XFCE")
                         }
                     }
@@ -578,7 +583,7 @@ ApplicationWindow {
                             onClicked: unityselected.visible        = true
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
-                            onClicked: kodiselected.visible         = false
+                            onClicked: kdeselected.visible         = false
                             Core.setDesktopEnvironment("UNITY")
                         }
                     }
@@ -638,7 +643,7 @@ ApplicationWindow {
                             onClicked: unityselected.visible        = false
                             onClicked: deepinselected.visible       = true
                             onClicked: pantheonselected.visible     = false
-                            onClicked: kodiselected.visible         = false
+                            onClicked: kdeselected.visible         = false
                             Core.setDesktopEnvironment("DEEPIN")
                         }
                     }
@@ -698,7 +703,7 @@ ApplicationWindow {
                             onClicked: unityselected.visible        = false
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = true
-                            onClicked: kodiselected.visible         = false
+                            onClicked: kdeselected.visible         = false
                             Core.setDesktopEnvironment("PANTHEON")
                         }
                     }
@@ -743,10 +748,10 @@ ApplicationWindow {
                     height: 150
                     color: "#f6f6f6"
                     Image {
-                        id: kodiogo
+                        id: kdelogo
                         width: 96
                         height: 96
-                        source: "qrc:/img/kodi-oobp.png"
+                        source: "qrc:/img/kde-oobp.png"
                     }
                     MouseArea {
                         anchors.fill: parent
@@ -758,8 +763,8 @@ ApplicationWindow {
                             onClicked: unityselected.visible        = false
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
-                            onClicked: kodiselected.visible         = true
-                            Core.setDesktopEnvironment("KODI")
+                            onClicked: kdeselected.visible         = true
+                            Core.setDesktopEnvironment("KDE")
                         }
                     }
                 }
@@ -769,9 +774,9 @@ ApplicationWindow {
                     height: 150
                     color: "#f6f6f6"
                     Text {
-                        id: kodititle
+                        id: kdetitle
                         color: "#666666"
-                        text: qsTr("<b>Kodi</b>")
+                        text: qsTr("<b>Plasma</b>")
                         font.family: "Sans"
                         textFormat: Text.RichText
                         font.pixelSize: 24
@@ -779,16 +784,16 @@ ApplicationWindow {
                     Text {
                         y: 34
                         width: 280
-                        id: kodidesc
+                        id: kdedesc
                         color: "#666666"
-                        text: qsTr("Kodi Media Center, turning your AOSC OS machine into a multimedia powerhouse.")
+                        text: qsTr("Plasma desktop (KDE) is a full desktop suite with beautiful visual effects.")
                         font.family: "Sans"
                         textFormat: Text.RichText
                         wrapMode: Text.WordWrap
                         font.pixelSize: 15
                     }
                     Image {
-                        id: kodiselected
+                        id: kdeselected
                         x: -46
                         y: 76
                         width: 24
@@ -799,7 +804,314 @@ ApplicationWindow {
               }
             }
 
+            Text {
+                id: stop3
+                x: 56
+                y: 1780
+                width: 870
+                height: 40
+                color: "#666666"
+                text: qsTr("<b>Stop III. Optional Features")
+                font.family: "Sans"
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                font.pixelSize: 32
+            }
+
+            Text {
+                id: stop3text
+                x: 56
+                y: 1835
+                width: 870
+                height: 40
+                color: "#666666"
+                text: qsTr("AOSC OS tries to include best softwares with the system release, but sadly with some limitations like licensing for
+                                        redistribution and instalation sizes, we were not able to include some great softwares with our AOSC OS releases.
+                                        But with help from the Internet, you will be able to install them from our repository, and here below is some of the best
+                                        ones we were to offer.")
+                font.family: "Sans"
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                font.pixelSize: 15
+            }
+
             Grid {
+                x: 56
+                y: 1950
+                columns: 4
+                spacing: 2
+
+                Rectangle {
+                    width: 128
+                    height: 150
+                    color: "#f6f6f6"
+                    Image {
+                        id: aoscartworklogo
+                        width: 96
+                        height: 96
+                        source: "qrc:/img/OptLogo_Artwork.png"
+                    }
+                }
+
+                Rectangle {
+                    width: 300
+                    height: 150
+                    color: "#f6f6f6"
+                    Text {
+                        id: aoscartworktitle
+                        color: "#666666"
+                        text: qsTr("<b>Artwork</b>")
+                        font.family: "Sans"
+                        textFormat: Text.RichText
+                        font.pixelSize: 24
+                    }
+                    Text {
+                        y: 34
+                        width: 280
+                        id: aoscartworkdesc
+                        color: "#666666"
+                        text: qsTr("Beautiful wallpapers from our friends inside and outside of AOSC.")
+                        font.family: "Sans"
+                        wrapMode: Text.WordWrap
+                        textFormat: Text.RichText
+                        font.pixelSize: 15
+                    }
+                    Image {
+                        id: aoscartworkselected
+                        x: -46
+                        y: 76
+                        width: 24
+                        height: 24
+                        visible: false
+                        source: "qrc:/img/Progress_Checked.png"
+                    }
+                }
+
+            Rectangle {
+                width: 128
+                height: 150
+                color: "#f6f6f6"
+                Image {
+                    id: chromelogo
+                    width: 96
+                    height: 96
+                    antialiasing: true
+                    source: "qrc:/img/OptLogo_GoogleChrome.png"
+                }
+           }
+
+
+            Rectangle {
+                width: 300
+                height: 150
+                color: "#f6f6f6"
+                Text {
+                    id: chrometitle
+                    color: "#666666"
+                    text: qsTr("<b>Google Chrome</b>")
+                    font.family: "Sans"
+                    textFormat: Text.RichText
+                    font.pixelSize: 24
+                }
+                Text {
+                    y: 34
+                    width: 280
+                    id: chromedesc
+                    color: "#666666"
+                    text: qsTr("Google Chrome is a fast browser from Google,due to proprietary components included, we are not able to preinstall it.")
+                    font.family: "Sans"
+                    textFormat: Text.RichText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 15
+                }
+                Image {
+                    id: chromeselected
+                    x: -46
+                    y: 76
+                    width: 24
+                    height: 24
+                    visible: false
+                    source: "qrc:/img/Progress_Checked.png"
+                }
+          }
+
+            Rectangle {
+                width: 128
+                height: 150
+                color: "#f6f6f6"
+                Image {
+                    id: imlogo
+                    width: 96
+                    height: 96
+                    antialiasing: true
+                    source: "qrc:/img/OptLogo_InputMethod.png"
+                }
+           }
+
+
+            Rectangle {
+                width: 300
+                height: 150
+                color: "#f6f6f6"
+                Text {
+                    id: imtitle
+                    color: "#666666"
+                    text: qsTr("<b>Input Method</b>")
+                    font.family: "Sans"
+                    textFormat: Text.RichText
+                    font.pixelSize: 24
+                }
+                Text {
+                    y: 34
+                    width: 280
+                    id: imdesc
+                    color: "#666666"
+                    text: qsTr("Input method for complex language input like Chinese and Japanese.")
+                    font.family: "Sans"
+                    textFormat: Text.RichText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 15
+                }
+                Image {
+                    id: imselected
+                    x: -46
+                    y: 76
+                    width: 24
+                    height: 24
+                    visible: false
+                    source: "qrc:/img/Progress_Checked.png"
+                }
+          }
+
+            Rectangle {
+                width: 128
+                height: 150
+                color: "#f6f6f6"
+                Image {
+                    // Hacks used. Too lazy to fix the image.
+                    id: libologo
+                    x: 5
+                    width: 85
+                    height: 96
+                    antialiasing: true
+                    source: "qrc:/img/OptLogo_LibO.png"
+                }
+           }
+
+
+            Rectangle {
+                width: 300
+                height: 150
+                color: "#f6f6f6"
+                Text {
+                    id: libotitle
+                    color: "#666666"
+                    text: qsTr("<b>LibreOffice</b>")
+                    font.family: "Sans"
+                    textFormat: Text.RichText
+                    font.pixelSize: 24
+                }
+                Text {
+                    y: 34
+                    width: 280
+                    id: libodesc
+                    color: "#666666"
+                    text: qsTr("LibreOffice is a FOSS productivitiy suite that is generally compatible with Microsoft Office.")
+                    font.family: "Sans"
+                    textFormat: Text.RichText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 15
+                }
+                Image {
+                    id: liboselected
+                    x: -46
+                    y: 76
+                    width: 24
+                    height: 24
+                    visible: false
+                    source: "qrc:/img/Progress_Checked.png"
+                }
+          }
+
+            Rectangle {
+                width: 128
+                height: 150
+                color: "#f6f6f6"
+                Image {
+                    id: winelogo
+                    width: 96
+                    height: 96
+                    antialiasing: true
+                    source: "qrc:/img/OptLogo_Wine.png"
+                }
+           }
+
+            Rectangle {
+                width: 300
+                height: 150
+                color: "#f6f6f6"
+                Text {
+                    id: winetitle
+                    color: "#666666"
+                    text: qsTr("<b>Wine</b>")
+                    font.family: "Sans"
+                    textFormat: Text.RichText
+                    font.pixelSize: 24
+                }
+                Text {
+                    y: 34
+                    width: 280
+                    id: winedesc
+                    color: "#666666"
+                    text: qsTr("Wine is a compatibility layer/translator for running Windows applications under UNIX operating systems.")
+                    font.family: "Sans"
+                    textFormat: Text.RichText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 15
+                }
+                Image {
+                    id: wineselected
+                    x: -46
+                    y: 76
+                    width: 24
+                    height: 24
+                    visible: false
+                    source: "qrc:/img/Progress_Checked.png"
+                }
+          }
+      }
+
+            Text {
+                id: stop4
+                x: 56
+                y: 2425
+                width: 870
+                height: 40
+                color: "#666666"
+                text: qsTr("<b>Stop IV. Target Customization")
+                font.family: "Sans"
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                font.pixelSize: 32
+            }
+
+            Text {
+                id: stop4text
+                x: 56
+                y: 2475
+                width: 870
+                height: 40
+                color: "#666666"
+                text: qsTr("In here below you are to choose the target partition and file system of the installation, and user information. Please
+                                        double check before you confirm the installation.")
+                font.family: "Sans"
+                wrapMode: Text.WordWrap
+                textFormat: Text.RichText
+                font.pixelSize: 15
+            }
+
+
+/*            Grid {
                 x: 56
                 y: 1800
                 columns: 4
@@ -824,12 +1136,9 @@ ApplicationWindow {
                         }
                     }
                 }
-            }
+            } */
 
-        }
-
-        style: ScrollViewStyle {
-            transientScrollBars: true
         }
     }
+
 }
