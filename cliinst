@@ -254,6 +254,7 @@ mount --bind /dev dev
 mount --bind /proc proc
 mount --bind /sys sys
 if [ "$EFI" = "yes" ]; then
+    mkdir /mnt/target/efi
     mount $ESP /mnt/target/efi
 else
     true
