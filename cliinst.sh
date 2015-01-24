@@ -289,6 +289,9 @@ else
     printf "Installing optional features...\t\t\t\t\033[1;32m[OK]\033[0m\n"
 fi
 
+# fc-cache ensure
+fc-cache -v
+
 # GRUB
 printf "Configuring GRUB...\t\t\t\t\t\033[1;36m[INFO]\033[0m\n"
 if [ "$EFI" = "no" ]; then
