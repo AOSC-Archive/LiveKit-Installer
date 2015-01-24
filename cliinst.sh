@@ -212,7 +212,6 @@ if [ $? -ne 0 ]; then
     install_fail
 else
     printf "\t\t\t\t\033[1;32m[OK]\033[0m\n"
-    continue
 fi
 
 # For you lazy people who do not want to clean your partition...
@@ -230,7 +229,6 @@ if [ $? -ne 0 ]; then
     install_fail
 else
     printf "\nStarting to download the system release...\t\t\033[1;32m[OK]\033[0m\n"
-    continue
 fi
 
 # Extract this buggar
@@ -243,7 +241,6 @@ if [ $? -ne 0 ]; then
     install_fail
 else
     printf "Unpacking the system image...\t\t\t\t\033[1;32m[OK]\033[0m\n"
-    continue
 fi
 
 # Prepare chroot
@@ -266,7 +263,6 @@ if [ $? -ne 0 ]; then
     install_fail
 else
     printf "\t\t\t\t\033[1;32m[OK]\033[0m\n"
-    continue
 fi
 
 # Install optional features
@@ -291,7 +287,6 @@ if [ $? -ne 0 ]; then
     install_fail
 else
     printf "Installing optional features...\t\t\t\t\033[1;32m[OK]\033[0m\n"
-    continue
 fi
 
 # GRUB
@@ -307,7 +302,6 @@ if [ $? -ne 0 ]; then
     install_fail
 else
     printf "Configuring GRUB...\t\t\t\t\t\033[1;32m[OK]\033[0m\n"
-    continue
 fi
 
 # DONE!
@@ -319,4 +313,5 @@ pushd /mnt/target > /dev/null
 umount -Rf dev proc sys
 popd > /dev/null
 umount -Rf /mnt/target
+read -p "Press [ENTER] when you are sure everything's good."
 exit
