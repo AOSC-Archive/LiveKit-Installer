@@ -75,7 +75,6 @@ ApplicationWindow {
         width: 1024
         height: 592
 
-
         style: ScrollViewStyle {
             transientScrollBars: true
         }
@@ -343,7 +342,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kdeselected.visible         = false
-                            Core.setDesktopEnvironment("GNOME")         // FSCK QT!
+                            Core.setDesktopEnvironment("GNOME")
                         }
                     }
                 }
@@ -851,6 +850,10 @@ ApplicationWindow {
                         height: 96
                         source: "qrc:/img/OptLogo_Artwork.png"
                     }
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {aoscartworkselected.visible = !aoscartworkselected.visible}
+                    }
                 }
 
                 Rectangle {
@@ -885,6 +888,10 @@ ApplicationWindow {
                         visible: false
                         source: "qrc:/img/Progress_Checked.png"
                     }
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {aoscartworkselected.visible = !aoscartworkselected.visible}
+                    }
                 }
 
             Rectangle {
@@ -897,6 +904,10 @@ ApplicationWindow {
                     height: 96
                     antialiasing: true
                     source: "qrc:/img/OptLogo_GoogleChrome.png"
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {chromeselected.visible = !chromeselected.visible}
                 }
            }
 
@@ -933,6 +944,10 @@ ApplicationWindow {
                     visible: false
                     source: "qrc:/img/Progress_Checked.png"
                 }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {chromeselected.visible = !chromeselected.visible}
+                }
           }
 
             Rectangle {
@@ -945,6 +960,10 @@ ApplicationWindow {
                     height: 96
                     antialiasing: true
                     source: "qrc:/img/OptLogo_InputMethod.png"
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {imselected.visible = !imselected.visible}
                 }
            }
 
@@ -981,6 +1000,10 @@ ApplicationWindow {
                     visible: false
                     source: "qrc:/img/Progress_Checked.png"
                 }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {imselected.visible = !imselected.visible}
+                }
           }
 
             Rectangle {
@@ -995,6 +1018,10 @@ ApplicationWindow {
                     height: 96
                     antialiasing: true
                     source: "qrc:/img/OptLogo_LibO.png"
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {liboselected.visible = !liboselected.visible}
                 }
            }
 
@@ -1031,6 +1058,10 @@ ApplicationWindow {
                     visible: false
                     source: "qrc:/img/Progress_Checked.png"
                 }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {liboselected.visible = !liboselected.visible}
+                }
           }
 
             Rectangle {
@@ -1043,6 +1074,10 @@ ApplicationWindow {
                     height: 96
                     antialiasing: true
                     source: "qrc:/img/OptLogo_Wine.png"
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {wineselected.visible = !wineselected.visible}
                 }
            }
 
@@ -1077,6 +1112,10 @@ ApplicationWindow {
                     height: 24
                     visible: false
                     source: "qrc:/img/Progress_Checked.png"
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {wineselected.visible = !wineselected.visible}
                 }
           }
       }
