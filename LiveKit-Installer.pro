@@ -40,3 +40,9 @@ unix {
 DISTFILES += \
     qml/completion.qml
 
+SOURCES += \
+    src/QMLDynLoader.cpp
+
+HEADERS += \
+    src/QMLDynLoader.h
+

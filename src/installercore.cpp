@@ -2,8 +2,7 @@
 #include <QDebug>
 #include <stdio.h>
 
-InstallerCore::InstallerCore(QObject *parent) :
-    QObject(parent){
+InstallerCore::InstallerCore(QMLDynLoader *parent){
     systemThread = new F_systemThread(this);
 //    systemThread->setExecCommand("sudo gparted");
     DesktopEnvironment  = DEFAULT;
@@ -46,6 +45,10 @@ void InstallerCore::launchGparted(){
 //        system("sudo killall gparted gpartedbin");
     }
     systemThread->start();
+}
+
+void InstallerCore::switchWindowToPage2(){
+    this->loadQml(QUrl("qrc:/qml/progress.qml"));
 }
 
 F_systemThread::F_systemThread(QObject *parent):

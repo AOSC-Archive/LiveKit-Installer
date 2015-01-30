@@ -1150,9 +1150,9 @@ ApplicationWindow {
             }
 
 
-/*            Grid {
+            Grid {
                 x: 56
-                y: 1800
+                y: 2700
                 columns: 4
                 spacing: 2
                 Rectangle{
@@ -1162,7 +1162,7 @@ ApplicationWindow {
                     Text{
                         y: 33
                         id: launchGpartedText
-                        text: qsTr("点我打开gparted XD")
+                        text: qsTr("点我切换到页面2 XD")
                         font.family: "Sans"
                         textFormat: Text.RichText
                         font.pixelSize: 15
@@ -1171,11 +1171,11 @@ ApplicationWindow {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            Core.launchGparted()
+                            Core.switchWindowToPage2()
                         }
                     }
                 }
-            } */
+            }
 
         }
     }
