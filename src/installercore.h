@@ -45,6 +45,7 @@ public:
     }
     Q_INVOKABLE void    setDesktopEnvironment(QString);
     Q_INVOKABLE void    setPackageManager(QString);
+    Q_INVOKABLE void    setOptional(QString);
     Q_INVOKABLE void    launchGparted(void);
     Q_INVOKABLE void    switchWindowToPage2(void);
 signals:
@@ -57,6 +58,11 @@ protected:
      F_systemThread *systemThread;
      int DesktopEnvironment;
      int PackageManager;
+     bool installArtwork;
+     bool installChrome;
+     bool installIM;
+     bool installLibO;  // libreoffice
+     bool installWine;
 };
 
 #endif // INSTALLERCORE_H

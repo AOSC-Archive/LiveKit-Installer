@@ -193,6 +193,7 @@ ApplicationWindow {
                             onClicked: {
                                 onClicked: dpkgselected.visible = true
                                 onClicked: rpmselected.visible = false
+                                Core.setPackageManager("DPKG")
                             }
                         }
 
@@ -248,6 +249,7 @@ ApplicationWindow {
                         onClicked: {
                             onClicked: rpmselected.visible = true
                             onClicked: dpkgselected.visible = false
+                            Core.setPackageManager("RPM")
                         }
                     }
                 }
@@ -852,7 +854,10 @@ ApplicationWindow {
                     }
                     MouseArea{
                         anchors.fill: parent
-                        onClicked: {aoscartworkselected.visible = !aoscartworkselected.visible}
+                        onClicked: {
+                            aoscartworkselected.visible = !aoscartworkselected.visible
+                            Core.setOptional("Artwork");
+                        }
                     }
                 }
 
@@ -890,7 +895,10 @@ ApplicationWindow {
                     }
                     MouseArea{
                         anchors.fill: parent
-                        onClicked: {aoscartworkselected.visible = !aoscartworkselected.visible}
+                        onClicked: {
+                            aoscartworkselected.visible = !aoscartworkselected.visible
+                            Core.setOptional("Artwork");
+                        }
                     }
                 }
 
@@ -907,7 +915,10 @@ ApplicationWindow {
                 }
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: {chromeselected.visible = !chromeselected.visible}
+                    onClicked: {
+                        chromeselected.visible = !chromeselected.visible
+                        Core.setOptional("Chrome");
+                    }
                 }
            }
 
@@ -946,7 +957,10 @@ ApplicationWindow {
                 }
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: {chromeselected.visible = !chromeselected.visible}
+                    onClicked: {
+                        chromeselected.visible = !chromeselected.visible
+                        Core.setOptional("Chrome");
+                    }
                 }
           }
 
@@ -963,7 +977,10 @@ ApplicationWindow {
                 }
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: {imselected.visible = !imselected.visible}
+                    onClicked: {
+                        imselected.visible = !imselected.visible
+                        Core.setOptional("IM");
+                    }
                 }
            }
 
@@ -1002,7 +1019,10 @@ ApplicationWindow {
                 }
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: {imselected.visible = !imselected.visible}
+                    onClicked: {
+                        imselected.visible = !imselected.visible
+                        Core.setOptional("IM");
+                    }
                 }
           }
 
@@ -1021,7 +1041,10 @@ ApplicationWindow {
                 }
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: {liboselected.visible = !liboselected.visible}
+                    onClicked: {
+                        liboselected.visible = !liboselected.visible
+                        Core.setOptional("LibO");
+                    }
                 }
            }
 
@@ -1060,7 +1083,10 @@ ApplicationWindow {
                 }
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: {liboselected.visible = !liboselected.visible}
+                    onClicked: {
+                        liboselected.visible = !liboselected.visible
+                        Core.setOptional("LibO");
+                    }
                 }
           }
 
@@ -1077,7 +1103,10 @@ ApplicationWindow {
                 }
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: {wineselected.visible = !wineselected.visible}
+                    onClicked: {
+                        wineselected.visible = !wineselected.visible
+                        Core.setOptional("Wine");
+                    }
                 }
            }
 
@@ -1115,7 +1144,10 @@ ApplicationWindow {
                 }
                 MouseArea{
                     anchors.fill: parent
-                    onClicked: {wineselected.visible = !wineselected.visible}
+                    onClicked: {
+                        wineselected.visible = !wineselected.visible
+                        Core.setOptional("Wine");
+                    }
                 }
           }
       }

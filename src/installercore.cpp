@@ -7,6 +7,11 @@ InstallerCore::InstallerCore(QMLDynLoader *parent){
 //    systemThread->setExecCommand("sudo gparted");
     DesktopEnvironment  = DEFAULT;
     PackageManager      = DEFAULT;
+    installArtwork      = false;
+    installChrome       = false;
+    installIM           = false;
+    installLibO         = false;
+    installWine         = false;
 }
 
 void InstallerCore::setDesktopEnvironment(QString DE){
@@ -31,7 +36,7 @@ void InstallerCore::setDesktopEnvironment(QString DE){
 }
 
 void InstallerCore::setPackageManager(QString PM){
-    qDebug() << PM << "is selected!" << endl;
+    qDebug() << PM << "is selected!";
     if      (PM == "DPKG"){
         PackageManager = DPKG;
     }else if(PM == "RPM"){
@@ -49,6 +54,20 @@ void InstallerCore::launchGparted(){
 
 void InstallerCore::switchWindowToPage2(){
     this->loadQml(QUrl("qrc:/qml/progress.qml"));
+}
+
+void InstallerCore::setOptional(QString Opt){
+    qDebug() << Opt << "is selected!";
+    if(Opt == "Artwork")
+        installArtwork  = !installArtwork;
+    else if(Opt == "Chrome")
+        installChrome   = !installChrome;
+    else if(Opt == "IM")
+        installIM       = !installIM;
+    else if(Opt == "LibO")
+        installLibO     = !installLibO;
+    else if(Opt == "Wine")
+        installWine     = !installWine;
 }
 
 F_systemThread::F_systemThread(QObject *parent):
