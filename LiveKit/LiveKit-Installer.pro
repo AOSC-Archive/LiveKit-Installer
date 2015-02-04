@@ -41,8 +41,11 @@ DISTFILES += \
     qml/completion.qml
 
 SOURCES += \
-    src/QMLDynLoader.cpp
+    src/QMLDynLoader.cpp \
+    src/partitionselect.cpp
 
 HEADERS += \
-    src/QMLDynLoader.h
+    src/QMLDynLoader.h \
+    src/partitionselect.h
 
+LIBS += -lparted

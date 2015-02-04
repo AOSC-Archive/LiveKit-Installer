@@ -1194,7 +1194,7 @@ ApplicationWindow {
                     Text{
                         y: 33
                         id: launchGpartedText
-                        text: qsTr("点我切换到页面2 XD")
+                        text: qsTr("Click me to open parted")
                         font.family: "Sans"
                         textFormat: Text.RichText
                         font.pixelSize: 15
@@ -1203,7 +1203,7 @@ ApplicationWindow {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            Core.switchWindowToPage2()
+                            Core.launchOS3Parted()
                         }
                     }
                 }

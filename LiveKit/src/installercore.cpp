@@ -5,6 +5,7 @@
 InstallerCore::InstallerCore(QMLDynLoader *parent){
     systemThread = new F_systemThread(this);
 //    systemThread->setExecCommand("sudo gparted");
+    PartedWindow        = new PartitionList;
     DesktopEnvironment  = DEFAULT;
     PackageManager      = DEFAULT;
     installArtwork      = false;
@@ -12,6 +13,8 @@ InstallerCore::InstallerCore(QMLDynLoader *parent){
     installIM           = false;
     installLibO         = false;
     installWine         = false;
+    PartedWindow->setVisible(false);
+    PartedWindow->resize(400,400);
 }
 
 void InstallerCore::setDesktopEnvironment(QString DE){
@@ -70,6 +73,11 @@ void InstallerCore::setOptional(QString Opt){
         installWine     = !installWine;
 }
 
+void InstallerCore::launchOS3Parted(void){
+    this->PartedWindow->setVisible(!this->PartedWindow->isVisible());
+    this->PartedWindow->RefreshList();
+}
+
 F_systemThread::F_systemThread(QObject *parent):
     QThread(parent){
 }
@@ -77,3 +85,5 @@ F_systemThread::F_systemThread(QObject *parent):
 void F_systemThread::setExecCommand(QString Cmd){
     ExecCommand = Cmd;
 }
+
+

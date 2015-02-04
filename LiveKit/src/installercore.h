@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QThread>
 #include "QMLDynLoader.h"
+#include "partitionselect.h"
 
 #ifndef LIVEKIT_DEF
 #define LIVEKIT_DEF
@@ -47,6 +48,7 @@ public:
     Q_INVOKABLE void    setPackageManager(QString);
     Q_INVOKABLE void    setOptional(QString);
     Q_INVOKABLE void    launchGparted(void);
+    Q_INVOKABLE void    launchOS3Parted(void);
     Q_INVOKABLE void    switchWindowToPage2(void);
 signals:
 
@@ -63,6 +65,7 @@ protected:
      bool installIM;
      bool installLibO;  // libreoffice
      bool installWine;
+     PartitionList *PartedWindow;
 };
 
 #endif // INSTALLERCORE_H
