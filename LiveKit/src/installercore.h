@@ -65,7 +65,7 @@ protected:
      bool installIM;
      bool installLibO;  // libreoffice
      bool installWine;
-     PartitionList *PartedWindow;
+     PartedPage     *PartedWindow;
 };
 
 #endif // INSTALLERCORE_H
