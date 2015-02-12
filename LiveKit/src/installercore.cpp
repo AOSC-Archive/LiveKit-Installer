@@ -1,4 +1,5 @@
 #include "installercore.h"
+#include <QLayout>
 #include <QDebug>
 #include <stdio.h>
 
@@ -14,7 +15,9 @@ InstallerCore::InstallerCore(QMLDynLoader *parent){
     installLibO         = false;
     installWine         = false;
     PartedWindow->setVisible(false);
-    PartedWindow->resize(500,500);
+    PartedWindow->resize(465,430);
+    PartedWindow->setMaximumSize(460,425);
+    PartedWindow->setMinimumSize(460,425);
 }
 
 void InstallerCore::setDesktopEnvironment(QString DE){
