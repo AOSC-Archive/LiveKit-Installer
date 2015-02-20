@@ -13,6 +13,7 @@ clear
 install_fail () {
 printf "\nThe installation of AOSC OS has failed. Please file a bug to http://bugs.anthonos.org,
 or find one of our developers at #anthon.\n"
+read -p "Press [Enter] to exit installation."
 exit
 }
 
@@ -23,6 +24,8 @@ printf "\tFirstly, a big thank you for choosing to test our newest system releas
 \tto our bug tracker, http://bugs.anthonos.org.\n"
 printf "\n\n\tAOSC OS developers\n\n"
 printf "********************************************************************************\n\n"
+read -p "Press [Enter] to continue..."
+clear
 
 printf "As of why you are using this CLI based installer instead of the fancy QtQuick one,
 well sadly, as a matter of fact for now, we are not yet ready to ship it with our 
@@ -185,7 +188,7 @@ printf "\n\033[1;33mSTEP 2. Pre-launch Test\033[0m
 Before we will finally start installing, please double check that...
 
 \033[1;31m1. YOU ARE CONNECTED TO THE INTERNET (TRY OPENING UP \033[1;36mhttp://repo.anthonos.org\033[1;31m BY
-   CLICKING ON THE LINK INSIDE OF THE BROWSER);
+   CLICKING ON THE LINK INSIDE OF THE TERMINAL WINDOW);
 2. YOUR AC PLUG IS SECURED, IF YOU ARE USING A LAPTOP;\033[0m\n\n"
 
 read -p "Press [ENTER] when you are sure everything's good."
@@ -193,7 +196,7 @@ read -p "Press [ENTER] when you are sure everything's good."
 printf "\n\033[1;33mSTEP 3. Take a Deep Breath\033[0m
 Now, you shall take a deep breath before we officially starts the installation...\n\n"
 
-printf "Press [ENTER] to start the \033[1;31mSMOOOOOOOOOKE TEEEEEEST\033[0m!!!"
+printf "Press [ENTER] to officially begin the installation."
 read -p  ""
 
 clear
@@ -222,7 +225,8 @@ printf "\t\t\t\033[1;32m[OK]\033[0m\n"
 # Download the tarball
 printf "Starting to download the system release...\t\t\033[1;36m[INFO]\033[0m\n"
 pushd /mnt/target > /dev/null
-axel -a http://repo.anthonos.org/os3-releases/01_Beta/01_Tarballs/aosc-os3_${DE}-beta_pichu_${PM}_en-US.tar.xz 
+# USTC for now, before we get done with the automatic mirror redirection...
+axel -a http://mirrors.ustc.edu.cn/anthon/os3-releases/01_Beta/01_Tarballs/aosc-os3_${DE}-beta_pichu_${PM}_en-US.tar.xz 
 popd > /dev/null
 if [ $? -ne 0 ]; then
     printf "\nStarting to download the system release...\t\t\033[1;31m[FAILED]\033[0m\n"
@@ -290,6 +294,7 @@ else
 fi
 
 # fc-cache ensure
+printf "Regenerating system fontconfig cache..\t\t\t\033[1;36m[INFO]\033[0m\n"
 fc-cache -v
 
 # GRUB
@@ -307,14 +312,19 @@ else
     printf "Configuring GRUB...\t\t\t\t\t\033[1;32m[OK]\033[0m\n"
 fi
 
-# DONE!
-printf "\n\n********************************************************************************\n
-Installation has successfully completed! Now we will perform some clean up. You may then
-reboot your machine and jump right into your fresh installation of AOSC OS.\n
-********************************************************************************\n"
+# Clean up
 pushd /mnt/target > /dev/null
 umount -Rf dev proc sys
 popd > /dev/null
 umount -Rf /mnt/target
+
+# DONE!
+printf "\n\n********************************************************************************\n
+Installation has successfully completed! Now we will perform some clean up. You may then
+reboot your machine and jump right into your fresh installation of AOSC OS.\n\n
+Default username is "aosc", password is "anthon"
+Default root password is "anthon", although using sudo is recommended.
+********************************************************************************\n"
+
 read -p "Press [ENTER] when you are sure everything's good."
 exit
