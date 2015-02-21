@@ -226,7 +226,7 @@ printf "\t\t\t\033[1;32m[OK]\033[0m\n"
 printf "Starting to download the system release...\t\t\033[1;36m[INFO]\033[0m\n"
 pushd /mnt/target > /dev/null
 # USTC for now, before we get done with the automatic mirror redirection...
-axel -a http://mirrors.ustc.edu.cn/anthon/os3-releases/01_Beta/01_Tarballs/aosc-os3_${DE}-beta_pichu_${PM}_en-US.tar.xz 
+axel -a http://mirrors.ustc.edu.cn/anthon/os3-releases/LATEST_TARBALL/${DE}_${PM}.tar.xz 
 popd > /dev/null
 if [ $? -ne 0 ]; then
     printf "\nStarting to download the system release...\t\t\033[1;31m[FAILED]\033[0m\n"
@@ -238,7 +238,7 @@ fi
 # Extract this buggar
 printf "Unpacking the system image...\t\t\t\t\033[1;36m[INFO]\033[0m\n"
 pushd /mnt/target > /dev/null
-pv aosc-os3_${DE}-beta_pichu_${PM}_en-US.tar.xz | tar xfJ -
+pv ${DE}_${PM}.tar.xz | tar xfJ -
 popd > /dev/null
 if [ $? -ne 0 ]; then
     printf "Unpacking the system image...\t\t\t\t\033[1;31m[FAILED]\033[0m\n"
