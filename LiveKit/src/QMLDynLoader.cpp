@@ -30,8 +30,8 @@ void QMLDynLoader::setEngine(QQmlApplicationEngine *engine){
 void QMLDynLoader::loadQml(const QUrl& qmlFile){
     if(this->mView_){
         mEngine_->load(qmlFile);
-        this->mView_->close();
-        this->mParentWindow_->close();
+        //this->mView_->close();
+        //this->mParentWindow_->close();
         this->mParentWindow_ = qobject_cast<QQuickWindow*>( this->mEngine_->rootObjects().value(0));
         mView_ = new QQuickView(this->mEngine_, this->mParentWindow_);
     }

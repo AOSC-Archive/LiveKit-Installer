@@ -470,7 +470,7 @@ PartedPage::~PartedPage(){
 
 void PartedPage::PervShow(){
     //emit SIGN_SetNextButtonDisabled(true);
-    system("umount -f /target");    //  umount all partitions
+    system("umount -Rf /target");    //  umount all partitions
     List->RefreshList();
 }
 

@@ -50,6 +50,7 @@ public:
     Q_INVOKABLE void    launchGparted(void);
     Q_INVOKABLE void    launchOS3Parted(void);
     Q_INVOKABLE void    switchWindowToPage2(void);
+    Q_INVOKABLE void    getRelease(void);
 signals:
 
 public slots:

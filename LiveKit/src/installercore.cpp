@@ -76,6 +76,10 @@ void InstallerCore::setOptional(QString Opt){
         installWine     = !installWine;
 }
 
+void InstallerCore::getRelease(){
+    return;
+}
+
 void InstallerCore::launchOS3Parted(void){
     this->PartedWindow->PervShow();
     this->PartedWindow->setVisible(!this->PartedWindow->isVisible());
