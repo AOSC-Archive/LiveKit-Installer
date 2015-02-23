@@ -48,4 +48,4 @@ HEADERS += \
     src/QMLDynLoader.h \
     src/partitionselect.h
 
-LIBS += -lparted
+LIBS += -lparted -lcurl

@@ -193,7 +193,7 @@ ApplicationWindow {
                             onClicked: {
                                 onClicked: dpkgselected.visible = true
                                 onClicked: rpmselected.visible = false
-                                Core.setPackageManager("DPKG")
+                                Core.setPackageManager("dpkg")
                             }
                         }
 
@@ -249,7 +249,7 @@ ApplicationWindow {
                         onClicked: {
                             onClicked: rpmselected.visible = true
                             onClicked: dpkgselected.visible = false
-                            Core.setPackageManager("RPM")
+                            Core.setPackageManager("rpm")
                         }
                     }
                 }
@@ -344,7 +344,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kdeselected.visible         = false
-                            Core.setDesktopEnvironment("GNOME")
+                            Core.setDesktopEnvironment("gnome")
                         }
                     }
                 }
@@ -404,7 +404,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kdeselected.visible         = false
-                            Core.setDesktopEnvironment("CINNAMON")
+                            Core.setDesktopEnvironment("cinnamon")
                         }
                     }
                 }
@@ -464,7 +464,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kdeselected.visible         = false
-                            Core.setDesktopEnvironment("MATE")
+                            Core.setDesktopEnvironment("mate")
                         }
                     }
                 }
@@ -525,7 +525,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kdeselected.visible         = false
-                            Core.setDesktopEnvironment("XFCE")
+                            Core.setDesktopEnvironment("xfce")
                         }
                     }
                 }
@@ -585,7 +585,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kdeselected.visible         = false
-                            Core.setDesktopEnvironment("UNITY")
+                            Core.setDesktopEnvironment("unity")
                         }
                     }
                 }
@@ -645,7 +645,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = true
                             onClicked: pantheonselected.visible     = false
                             onClicked: kdeselected.visible         = false
-                            Core.setDesktopEnvironment("DEEPIN")
+                            Core.setDesktopEnvironment("deepin")
                         }
                     }
                 }
@@ -705,7 +705,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = true
                             onClicked: kdeselected.visible         = false
-                            Core.setDesktopEnvironment("PANTHEON")
+                            Core.setDesktopEnvironment("pantheon")
                         }
                     }
                 }
@@ -765,7 +765,7 @@ ApplicationWindow {
                             onClicked: deepinselected.visible       = false
                             onClicked: pantheonselected.visible     = false
                             onClicked: kdeselected.visible         = true
-                            Core.setDesktopEnvironment("KDE")
+                            Core.setDesktopEnvironment("kde")
                         }
                     }
                 }
@@ -1203,7 +1203,7 @@ ApplicationWindow {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            Core.launchOS3Parted()
+                            Core.getRelease()
                         }
                     }
                 }

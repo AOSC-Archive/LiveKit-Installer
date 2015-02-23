@@ -37,6 +37,20 @@ protected:
     QString ExecCommand;
 };
 
+class F_getTarballThread : public QThread{
+    Q_OBJECT
+public:
+    explicit F_getTarballThread(QObject *parent = 0);
+    void setOpt(void *_Core,QString DE,QString PM);
+    void run();
+protected:
+    void    *Core;
+    QString DesktopEnvironment;
+    QString PackageManager;
+    QString Prefix;
+    QString Suffix;
+};
+
 class InstallerCore : public QMLDynLoader{
     Q_OBJECT
 public:
@@ -51,6 +65,8 @@ public:
     Q_INVOKABLE void    launchOS3Parted(void);
     Q_INVOKABLE void    switchWindowToPage2(void);
     Q_INVOKABLE void    getRelease(void);
+
+    void                progress_get(double progress);
 signals:
 
 public slots:
@@ -59,14 +75,15 @@ public slots:
     }
 protected:
      F_systemThread *systemThread;
-     int DesktopEnvironment;
-     int PackageManager;
+     QString DesktopEnvironment;
+     QString PackageManager;
      bool installArtwork;
      bool installChrome;
      bool installIM;
      bool installLibO;  // libreoffice
      bool installWine;
      PartedPage     *PartedWindow;
+     F_getTarballThread *getTarballThread;
 };
 
 #endif // INSTALLERCORE_H
