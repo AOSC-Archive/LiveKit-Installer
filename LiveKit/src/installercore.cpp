@@ -14,13 +14,13 @@ size_t write_data(void *buffer, size_t size, size_t nmemb, void *user_p){
     return return_size;
 }
 
-size_t progress_func(void *progress_data, double dltotal, double dlnow,double ultotal, double ulnow){
+size_t progress_func(void *progress_data, double dltotal, double dlnow,double , double ){
     ((InstallerCore*)progress_data)->progress_get(dlnow*100.0/dltotal);
     return 0;
 }
 
 
-InstallerCore::InstallerCore(QMLDynLoader *parent){
+InstallerCore::InstallerCore(QMLDynLoader *){
     systemThread        = new F_systemThread(this);
     getTarballThread    = new F_getTarballThread(this);
     PartedWindow        = new PartedPage;
@@ -72,7 +72,7 @@ void InstallerCore::setOptional(QString Opt){
 }
 
 void InstallerCore::getRelease(){
-
+    emit this->newMessagePosted();
 }
 
 void InstallerCore::launchOS3Parted(void){
@@ -137,5 +137,3 @@ F_systemThread::F_systemThread(QObject *parent):
 void F_systemThread::setExecCommand(QString Cmd){
     ExecCommand = Cmd;
 }
-
-

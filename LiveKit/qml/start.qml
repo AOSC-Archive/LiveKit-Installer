@@ -3,6 +3,8 @@ import QtQuick.Controls 1.2
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.2
+import com.aosc.InstallerCore 1.0
+
 
 ApplicationWindow {
     id: livekitwindow
@@ -11,6 +13,13 @@ ApplicationWindow {
     height: 720
     visible: true
     flags: Qt.FramelessWindowHint
+
+    InstallerCore{
+        onNewMessagePosted: console.log("HAHA")
+    }
+    function messageArrive(){
+        console.log("Message")
+    }
 
     MouseArea {
         id: moving
@@ -68,6 +77,10 @@ ApplicationWindow {
             }
         }
     }
+    InstallerCore{
+        onNewMessagePosted: console.log("HEHE")
+    }
+
 
     ScrollView {
         x: 0
@@ -78,6 +91,7 @@ ApplicationWindow {
         style: ScrollViewStyle {
             transientScrollBars: true
         }
+
 
         Rectangle {
             x: 0
@@ -1211,5 +1225,6 @@ ApplicationWindow {
 
         }
     }
+
 
 }

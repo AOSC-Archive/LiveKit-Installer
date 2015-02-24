@@ -6,6 +6,7 @@
 #include <QThread>
 #include "QMLDynLoader.h"
 #include "partitionselect.h"
+#include <QtQml>
 
 #ifndef LIVEKIT_DEF
 #define LIVEKIT_DEF
@@ -68,7 +69,7 @@ public:
 
     void                progress_get(double progress);
 signals:
-
+    void newMessagePosted();
 public slots:
     void setNumber(int i  ){
         qDebug()<< "Number is " << i << endl;
@@ -85,5 +86,6 @@ protected:
      PartedPage     *PartedWindow;
      F_getTarballThread *getTarballThread;
 };
+
 
 #endif // INSTALLERCORE_H
