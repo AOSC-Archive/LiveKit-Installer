@@ -16,6 +16,7 @@ ApplicationWindow {
     function onProgressArrive(Progress){
         installProgress.value = Progress/100
         /*当进度数据来到的时候(每次接受数据时)*/
+        output.text = qsTr("Downloading......%1%").arg(Progress)
     }
 
     MouseArea {
@@ -94,7 +95,7 @@ ApplicationWindow {
     }
 
     Text {
-        id: ouput
+        id: output
         x: 56
         y: 280
         width: 924

@@ -248,6 +248,9 @@ public slots:
     void            UnselectGrubClicked(void);
     void            UnselectEFIClicked(void);
     void            EnableEFISupport(bool);
+    void            NextButtonClicked();
+signals:
+    void            PartedDone();
 private:
     MyTabWidget     *DeviceSelect;
     QPushButton     *ChangeButton;
@@ -257,6 +260,7 @@ private:
     QPushButton     *MyBootDevice;
     QPushButton     *UnselectGrub;
     QPushButton     *UnselectEFI;
+    QPushButton     *NextButton;
     QLabel          *MyBootDevicePath;
     QLabel          *MyEFIPartitionPath;
     AddDialogBox    *AddDialog;

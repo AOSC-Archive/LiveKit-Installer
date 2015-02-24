@@ -36,4 +36,5 @@ QQuickWindow* QMLDynLoader::loadQml(const QUrl& qmlFile){
         mView_ = new QQuickView(this->mEngine_, this->mParentWindow_);
         return mParentWindow_;
     }
+    return NULL;
 }

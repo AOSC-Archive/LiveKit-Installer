@@ -64,7 +64,6 @@ public:
     Q_INVOKABLE void    setOptional(QString);
     Q_INVOKABLE void    launchGparted(void);
     Q_INVOKABLE void    launchOS3Parted(void);
-    Q_INVOKABLE void    switchWindowToPage2(void);
     Q_INVOKABLE void    getRelease(void);
 
     void                progress_get(double progress);
@@ -75,6 +74,7 @@ public slots:
     void setNumber(int i  ){
         qDebug()<< "Number is " << i << endl;
     }
+    void    switchWindowToPage2(void);
 protected:
      F_systemThread *systemThread;
      QString DesktopEnvironment;

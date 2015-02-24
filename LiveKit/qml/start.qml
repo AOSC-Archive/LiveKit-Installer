@@ -1214,7 +1214,7 @@ ApplicationWindow {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            Core.switchWindowToPage2()
+                            Core.launchOS3Parted()
                         }
                     }
                 }

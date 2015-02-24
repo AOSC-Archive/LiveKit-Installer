@@ -33,6 +33,7 @@ InstallerCore::InstallerCore(QMLDynLoader *){
     PartedWindow->resize(465,430);
     PartedWindow->setMaximumSize(460,425);
     PartedWindow->setMinimumSize(460,425);
+    this->connect(PartedWindow,SIGNAL(PartedDone()),this,SLOT(switchWindowToPage2()));
 }
 
 void InstallerCore::setDesktopEnvironment(QString DE){
@@ -89,7 +90,6 @@ void InstallerCore::launchOS3Parted(void){
 
 void InstallerCore::progress_get(double progress){
     emit this->currentProcess(progress);
-    qDebug()<<"progress:" << progress << "%";
 }
 
 F_getTarballThread::F_getTarballThread(QObject *parent):
@@ -123,7 +123,7 @@ void F_getTarballThread::run(){
     strcat(TarballURL,PackageManager.toUtf8().data());
     strcat(TarballURL,Suffix.toUtf8().data());
     printf("URL = %s\n",TarballURL);
-    FILE *fp = fopen("/tmp/OS3Beta.tar.xz","ab+");
+    FILE *fp = fopen("/target/OS3Beta.tar.xz","ab+");
     curl_easy_setopt(easy_handle,CURLOPT_URL,TarballURL);
     curl_easy_setopt(easy_handle, CURLOPT_NOPROGRESS, 0);
     curl_easy_setopt(easy_handle, CURLOPT_PROGRESSDATA,Core);

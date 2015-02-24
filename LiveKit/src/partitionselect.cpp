@@ -329,6 +329,7 @@ PartedPage::PartedPage(InstallerPage *parent)
     DelButton    = new QPushButton(this);
     MyBootDevice = new QPushButton(this);
     MyEFIPartition=new QPushButton(this);
+    NextButton   = new QPushButton(this);
     List         = new PartitionList();
     AddDialog    = new AddDialogBox;
     ChangeDialog = new ChangeDialogBox;
@@ -344,6 +345,7 @@ PartedPage::PartedPage(InstallerPage *parent)
     MyEFIPartition->setText(tr("Support Grub EFI"));
     MyBootDevicePath->setText(tr("Do not install"));
     MyEFIPartitionPath->setText(tr("Do not install"));
+    NextButton->setText(tr("Next"));
     UnselectGrub->setText(tr("Unselect"));
     UnselectEFI->setText(tr("Unselect"));
     AddButton->setGeometry(0,this->height()-120,20,20);
@@ -355,6 +357,7 @@ PartedPage::PartedPage(InstallerPage *parent)
     MyEFIPartition->setGeometry(0,this->height()-80,120,20);
     MyEFIPartitionPath->setGeometry(130,this->height()-80,120,20);
     UnselectEFI->setGeometry(300,this->height()-80,70,20);
+    NextButton->setGeometry(380,this->height()-120,70,60);
     SetContantTitle(tr("Parted!"));
     ped_device_probe_all();
     ChangeButton->setDisabled(true);
@@ -381,6 +384,14 @@ PartedPage::PartedPage(InstallerPage *parent)
     this->connect(UnselectGrub,SIGNAL(clicked()),this,SLOT(UnselectGrubClicked()));
     this->connect(MyEFIPartition,SIGNAL(clicked()),this,SLOT(SetEFIDest()));
     this->connect(UnselectEFI,SIGNAL(clicked()),this,SLOT(UnselectEFIClicked()));
+    this->connect(this->NextButton,SIGNAL(clicked()),this,SLOT(NextButtonClicked()));
+}
+
+void PartedPage::NextButtonClicked(){
+    if(SLOT_NextButtonClicked() != 0){
+        return;
+    }
+    emit PartedDone();
 }
 
 void PartedPage::ShowAddDialog(){
@@ -517,7 +528,7 @@ int PartedPage::SLOT_NextButtonClicked(){
     if(Path.length()>5){
         if(system("mkdir /target/boot") != 0){
             QMessageBox::warning(this,tr("提示"),tr("无法创建%SYSTEMROOT%/boot 目录，确认目标分区是否已经存在此同名文件"),QMessageBox::Yes);
-            return 0;
+            return -1;
         }
         bzero(Exec,64);
         sprintf(Exec,"mount %s /target/home",Path.toUtf8().data());
