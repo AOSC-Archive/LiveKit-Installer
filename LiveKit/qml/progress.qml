@@ -18,6 +18,31 @@ ApplicationWindow {
         /*当进度数据来到的时候(每次接受数据时)*/
         output.text = qsTr("Downloading......%1%").arg(Progress)
     }
+    function onUnpackingTarball(){
+        installProgress.minimumValue = 0
+        installProgress.maximumValue = 0
+        output.text = qsTr("Unpacking system tarball......")
+    }
+    function onUpdatingSystem(){
+        installProgress.minimumValue = 0
+        installProgress.maximumValue = 0
+        output.text = qsTr("Updating system......")
+    }
+    function onInstallOptionalFeatures(){
+        installProgress.minimumValue = 0
+        installProgress.maximumValue = 0
+        output.text = qsTr("Installing optional features......")
+    }
+    function onPerformingPostInstallation(){
+        installProgress.minimumValue = 0
+        installProgress.maximumValue = 0
+        output.text = qsTr("Performing post-installation.....")
+    }
+    function onInstallDone(){
+        output.text = qsTr("Installation was finished.....")
+        installProgress.maximumValue    = 1
+        installProgress.value           = 1
+    }
 
     MouseArea {
         id: moving
@@ -89,7 +114,7 @@ ApplicationWindow {
         x: 56
         y: 170
         color: "#666666"
-        text: qsTr("Installation In Progress...")
+        text: qsTr("Installation In Progress......")
         font.bold: true
         font.pixelSize: 36
     }
@@ -157,7 +182,7 @@ ApplicationWindow {
         width: 844
         height: 16
         color: "#666666"
-        text: qsTr("Downloading system release...")
+        text: qsTr("Downloading system release......")
         font.pixelSize: 14
         }
 
@@ -168,7 +193,7 @@ ApplicationWindow {
         width: 844
         height: 16
         color: "#666666"
-        text: qsTr("Unpacking system tarball...")
+        text: qsTr("Unpacking system tarball......")
         font.pixelSize: 14
         }
 
@@ -179,7 +204,7 @@ ApplicationWindow {
         width: 844
         height: 16
         color: "#666666"
-        text: qsTr("Updating system...")
+        text: qsTr("Updating system......")
         font.pixelSize: 14
         }
 
@@ -190,7 +215,7 @@ ApplicationWindow {
         width: 844
         height: 16
         color: "#666666"
-        text: qsTr("Installing optional features...")
+        text: qsTr("Installing optional features......")
         font.pixelSize: 14
         }
 
@@ -201,7 +226,7 @@ ApplicationWindow {
         width: 844
         height: 16
         color: "#666666"
-        text: qsTr("Performing post-installation configuration...")
+        text: qsTr("Performing post-installation configuration......")
         font.pixelSize: 14
         }
 

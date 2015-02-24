@@ -1215,6 +1215,7 @@ ApplicationWindow {
                         anchors.fill: parent
                         onClicked: {
                             Core.launchOS3Parted()
+                            //Core.switchWindowToPage2()
                         }
                     }
                 }

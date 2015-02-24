@@ -7,6 +7,7 @@
 #include "QMLDynLoader.h"
 #include "partitionselect.h"
 #include <QtQml>
+#include <QWidget>
 
 #ifndef LIVEKIT_DEF
 #define LIVEKIT_DEF
@@ -28,12 +29,9 @@ class F_systemThread : public QThread{  // Function systenm() thread
 public:
     explicit F_systemThread(QObject *parent = 0);
     void setExecCommand(QString);
-    void run(){
-        if(ExecCommand.isEmpty())
-            return;
-        else
-            system(ExecCommand.toUtf8().data());
-    };
+    void run();
+signals:
+    void    WorkDone(int);
 protected:
     QString ExecCommand;
 };
@@ -70,11 +68,21 @@ public:
 signals:
     void newMessagePosted();
     void currentProcess(QVariant);
+    void unpackingTarball();
+    void updatingSystem();
+    void installOptionalFeatures();
+    void performingPostInstallation();
+    void installDone();
 public slots:
     void setNumber(int i  ){
         qDebug()<< "Number is " << i << endl;
     }
     void    switchWindowToPage2(void);
+    void    downloadDone(void);
+    void    unpackDone(int);
+    void    updatingSystemDone(int);
+    void    installOptionalFeaturesDone(int);
+    void    performingPostInstallationDone(int);
 protected:
      F_systemThread *systemThread;
      QString DesktopEnvironment;
@@ -86,6 +94,8 @@ protected:
      bool installWine;
      PartedPage     *PartedWindow;
      F_getTarballThread *getTarballThread;
+     double Progress;
+     QWidget* MessageBoxWidget;
 };
 
 

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <curl/curl.h>
+#include <QMessageBox>
 
 CURL *curl;
 CURLcode res;
@@ -24,6 +25,7 @@ InstallerCore::InstallerCore(QMLDynLoader *){
     systemThread        = new F_systemThread(this);
     getTarballThread    = new F_getTarballThread(this);
     PartedWindow        = new PartedPage;
+    MessageBoxWidget    = new QWidget;
     installArtwork      = false;
     installChrome       = false;
     installIM           = false;
@@ -34,6 +36,7 @@ InstallerCore::InstallerCore(QMLDynLoader *){
     PartedWindow->setMaximumSize(460,425);
     PartedWindow->setMinimumSize(460,425);
     this->connect(PartedWindow,SIGNAL(PartedDone()),this,SLOT(switchWindowToPage2()));
+    this->connect(getTarballThread,SIGNAL(finished()),this,SLOT(downloadDone()));
 }
 
 void InstallerCore::setDesktopEnvironment(QString DE){
@@ -56,12 +59,16 @@ void InstallerCore::launchGparted(){
 
 void InstallerCore::switchWindowToPage2(){
     this->loadQml(QUrl("qrc:/qml/progress.qml"));
-    this->connect(this,SIGNAL(currentProcess(QVariant)),this->mEngine_->rootObjects().value(1),SLOT(onProgressArrive(QVariant)));
     if(DesktopEnvironment.isEmpty())
         exit(0);
     if(PackageManager.isEmpty())
         exit(0);
     getTarballThread->setOpt(this,DesktopEnvironment,PackageManager);
+    this->connect(this,SIGNAL(currentProcess(QVariant)),this->mEngine_->rootObjects().value(1), SLOT(onProgressArrive(QVariant)));
+    this->connect(this,SIGNAL(unpackingTarball()),      this->mEngine_->rootObjects().value(1), SLOT(onUnpackingTarball()));
+    this->connect(this,SIGNAL(updatingSystem()),        this->mEngine_->rootObjects().value(1), SLOT(onUpdatingSystem()));
+    this->connect(this,SIGNAL(installOptionalFeatures()),this->mEngine_->rootObjects().value(1),SLOT(onInstallOptionalFeatures()));
+    this->connect(this,SIGNAL(installDone()),           this->mEngine_->rootObjects().value(1), SLOT(onInstallDone()));
     this->getRelease();
 }
 
@@ -90,6 +97,61 @@ void InstallerCore::launchOS3Parted(void){
 
 void InstallerCore::progress_get(double progress){
     emit this->currentProcess(progress);
+    this->Progress = progress;
+}
+
+void InstallerCore::downloadDone(){
+    if(Progress < 99.9) exit(0);
+    // step II (Unpack tarball)
+    systemThread->setExecCommand("tar -xf /target/OS3Release.tar.xz > /tmp/output");
+    systemThread->start();
+    emit unpackingTarball();
+}
+
+void InstallerCore::unpackDone(int status){
+    if(status != 0){
+        QMessageBox::warning(MessageBoxWidget,tr("Warning"),tr("Failed to unpack system tarball!  Please read /tmp/output for detail"),QMessageBox::Yes);
+        exit(0);
+    }
+    systemThread->disconnect(   systemThread,SIGNAL(WorkDone(int)),this,SLOT(unpackDone(int)));
+    this->connect(              systemThread,SIGNAL(WorkDone(int)),this,SLOT(updatingSystemDone(int)));
+    systemThread->setExecCommand("...................updating system command......................");
+    emit this->updatingSystem();
+    systemThread->start();
+}
+
+void InstallerCore::updatingSystemDone(int status){
+    if(status != 0){
+        if(QMessageBox::warning(MessageBoxWidget,tr("Warning"),tr("Failed to updating system!  Do you want to go on installing?"),QMessageBox::Yes|QMessageBox::No) == QMessageBox::No)
+            exit(0);
+    }
+    this->disconnect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(updatingSystemDone(int)));
+    this->connect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(installOptionalFeaturesDone(int)));
+    systemThread->setExecCommand("...................install optional features......................");
+    emit this->installOptionalFeatures();
+    systemThread->start();
+}
+
+void InstallerCore::installOptionalFeaturesDone(int status){
+    if(status != 0){
+        if (QMessageBox::warning(MessageBoxWidget,tr("Warning"),tr("Failed to install optional features! Do you want to go on installing?"),QMessageBox::Yes|QMessageBox::No) == QMessageBox::No)
+            exit(0);
+    }
+    systemThread->disconnect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(installOptionalFeaturesDone(int)));
+    systemThread->connect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(performingPostInstallationDone(int)));
+    systemThread->setExecCommand("...................Performing post-installation......................");
+    emit this->performingPostInstallation();
+    systemThread->start();
+}
+
+void InstallerCore::performingPostInstallationDone(int status){
+    if(status != 0){
+        QMessageBox::warning(MessageBoxWidget,tr("Warning"),tr("Failed to performing post-installation scripts!  Please read /tmp/output for detail"),QMessageBox::Yes);
+        exit(0);
+    }
+    systemThread->disconnect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(performingPostInstallationDone(int)));
+    emit this->installDone();
+    // Then what should installer do?
 }
 
 F_getTarballThread::F_getTarballThread(QObject *parent):
@@ -144,4 +206,8 @@ F_systemThread::F_systemThread(QObject *parent):
 
 void F_systemThread::setExecCommand(QString Cmd){
     ExecCommand = Cmd;
+}
+
+void F_systemThread::run(){
+    emit WorkDone(system(ExecCommand.toUtf8().data()));
 }
