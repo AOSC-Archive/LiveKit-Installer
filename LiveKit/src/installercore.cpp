@@ -55,6 +55,13 @@ void InstallerCore::launchGparted(){
 
 void InstallerCore::switchWindowToPage2(){
     this->loadQml(QUrl("qrc:/qml/progress.qml"));
+    this->connect(this,SIGNAL(currentProcess(QVariant)),this->mEngine_->rootObjects().value(1),SLOT(onProgressArrive(QVariant)));
+    if(DesktopEnvironment.isEmpty())
+        exit(0);
+    if(PackageManager.isEmpty())
+        exit(0);
+    getTarballThread->setOpt(this,DesktopEnvironment,PackageManager);
+    this->getRelease();
 }
 
 void InstallerCore::setOptional(QString Opt){
@@ -72,7 +79,7 @@ void InstallerCore::setOptional(QString Opt){
 }
 
 void InstallerCore::getRelease(){
-    emit this->newMessagePosted();
+    getTarballThread->start();
 }
 
 void InstallerCore::launchOS3Parted(void){
@@ -81,7 +88,8 @@ void InstallerCore::launchOS3Parted(void){
 }
 
 void InstallerCore::progress_get(double progress){
-    return;
+    emit this->currentProcess(progress);
+    qDebug()<<"progress:" << progress << "%";
 }
 
 F_getTarballThread::F_getTarballThread(QObject *parent):

@@ -15,7 +15,7 @@ int main(int argc, char *argv[]){
     qmlRegisterType<InstallerCore>("com.aosc.InstallerCore",1,0,"InstallerCore");
 
     QQmlApplicationEngine engine(QUrl("qrc:/qml/start.qml"));
-    QObject::connect(&Core,SIGNAL(newMessagePosted()), engine.rootObjects().value(0),SLOT(messageArrive()));
+    //QObject::connect(&Core,SIGNAL(newMessagePosted()), engine.rootObjects().value(0),SLOT(messageArrive()));
     engine.rootContext()->setContextProperty("Core",&Core);
     Core.setEngine(&engine);
     return app.exec();

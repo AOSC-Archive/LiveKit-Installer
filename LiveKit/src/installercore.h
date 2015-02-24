@@ -70,6 +70,7 @@ public:
     void                progress_get(double progress);
 signals:
     void newMessagePosted();
+    void currentProcess(QVariant);
 public slots:
     void setNumber(int i  ){
         qDebug()<< "Number is " << i << endl;

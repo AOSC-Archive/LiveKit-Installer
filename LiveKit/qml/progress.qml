@@ -3,6 +3,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.Controls.Styles 1.2
+import com.aosc.InstallerCore 1.0
 
 ApplicationWindow {
     id: livekitwindow
@@ -11,6 +12,11 @@ ApplicationWindow {
     height: 720
     visible: true
     flags: Qt.FramelessWindowHint
+
+    function onProgressArrive(Progress){
+        installProgress.value = Progress/100
+        /*当进度数据来到的时候(每次接受数据时)*/
+    }
 
     MouseArea {
         id: moving

@@ -15,11 +15,11 @@ public:
     QMLDynLoader();
 
     void setEngine( QQmlApplicationEngine* engine );
-    void loadQml(const QUrl& qmlFile );
+    QQuickWindow *loadQml(const QUrl& qmlFile );
+    QQmlApplicationEngine* mEngine_;
 private:
     QQuickView* mView_;             //显示的view
     QQuickWindow* mParentWindow_;   //框架的父窗体
-    QQmlApplicationEngine* mEngine_;
 signals:
     void sError(const QString errorMsg);
 };

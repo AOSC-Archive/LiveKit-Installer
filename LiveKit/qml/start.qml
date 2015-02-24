@@ -17,9 +17,6 @@ ApplicationWindow {
     InstallerCore{
         onNewMessagePosted: console.log("HAHA")
     }
-    function messageArrive(){
-        console.log("Message")
-    }
 
     MouseArea {
         id: moving
@@ -1217,7 +1214,7 @@ ApplicationWindow {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            Core.getRelease()
+                            Core.switchWindowToPage2()
                         }
                     }
                 }
