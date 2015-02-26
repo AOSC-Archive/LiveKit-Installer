@@ -1,0 +1,27 @@
+# Copy resolv.conf into target system.
+cp /etc/resolv.conf $TARGET/etc/
+
+# Necessary filesystem mounts.
+mount --rbind /dev $TARGET/dev
+mount --bind /proc $TARGET/proc
+mount --bind /sys $TARGET/sys
+
+# Refreshing repositories and install optional features.
+# DPKG
+chroot $TARGET apt update; chroot $TARGET apt install $OPTFEATURES
+# RPM
+chroot $TARGET zypper ref -f; chroot $TARGET zypper install $OPTFEATURES
+
+# Generating fontconfig cache (mandatory!),
+chroot $TARGET fc-cache
+
+# Setting up users.
+# TODO
+
+# GRUB Installation.
+# Non-EFI systems.
+chroot $TARGET grub-install $TARGET_DISK; chroot $TARGET grub-mkconfig -o /boot/grub/grub.cfg
+# EFI systems.
+mount $ESP_PARTITION $TARGET/efi
+chroot $TARGET grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=AOSC-GRUB
+chroot $TARGET grub-mkconfig -o /boot/grub/grub.cfg
