@@ -113,9 +113,16 @@ void InstallerCore::unpackDone(int status){
         QMessageBox::warning(MessageBoxWidget,tr("Warning"),tr("Failed to unpack system tarball!  Please read /tmp/output for detail"),QMessageBox::Yes);
         exit(0);
     }
+    if (system(PRE_INST_SCRIPT) != 0){
+        QMessageBox::warning(MessageBoxWidget,tr("Warning"),tr("Failed to execute PreInst script/command"),QMessageBox::Yes);
+        exit(0);
+    }
     systemThread->disconnect(   systemThread,SIGNAL(WorkDone(int)),this,SLOT(unpackDone(int)));
     this->connect(              systemThread,SIGNAL(WorkDone(int)),this,SLOT(updatingSystemDone(int)));
-    systemThread->setExecCommand("...................updating system command......................");
+    if(this->PackageManager == "dpkg")
+        systemThread->setExecCommand(DPKG_UPDATE_SYSTEM_COMMAND);
+    else
+        systemThread->setExecCommand(RPM_UPDATE_SYSTEM_COMMAND);
     emit this->updatingSystem();
     systemThread->start();
 }
@@ -127,7 +134,30 @@ void InstallerCore::updatingSystemDone(int status){
     }
     this->disconnect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(updatingSystemDone(int)));
     this->connect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(installOptionalFeaturesDone(int)));
-    systemThread->setExecCommand("...................install optional features......................");
+    char ExecBuf[512] = {0};
+    if(this->PackageManager == "dpkg")
+        sprintf(ExecBuf,"apt install ");
+        if(installArtwork){
+            strcat(ExecBuf,PNs_ARTWORK);
+            strcat(ExecBuf," ");
+        }
+        if(installChrome){
+            strcat(ExecBuf,PNs_CHROME);
+            strcat(ExecBuf," ");
+        }
+        if(installIM){
+            strcat(ExecBuf,PNs_IM);
+            strcat(ExecBuf," ");
+        }
+        if(installLibO){
+            strcat(ExecBuf,PNs_LIBO);
+            strcat(ExecBuf," ");
+        }
+        if(installWine){
+            strcat(ExecBuf,PNs_WINE);
+            strcat(ExecBuf," ");
+        }
+        systemThread->setExecCommand(ExecBuf);
     emit this->installOptionalFeatures();
     systemThread->start();
 }
@@ -139,7 +169,7 @@ void InstallerCore::installOptionalFeaturesDone(int status){
     }
     systemThread->disconnect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(installOptionalFeaturesDone(int)));
     systemThread->connect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(performingPostInstallationDone(int)));
-    systemThread->setExecCommand("...................Performing post-installation......................");
+    systemThread->setExecCommand(POST_INST_SCRIPT);
     emit this->performingPostInstallation();
     systemThread->start();
 }

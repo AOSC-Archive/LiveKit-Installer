@@ -24,6 +24,27 @@
     #define RPM         10
 #endif
 
+#ifndef PACKAGE_NAME
+#define PACKAGE_NAME
+
+#define PNs_ARTWORK         "artwork"
+#define PNs_CHROME          "chrome"
+#define PNs_IM              "im"
+#define PNs_LIBO            "libreoffice"
+#define PNs_WINE            "wine32 wine64"
+
+#endif
+
+#ifndef INST_SCRIPT
+#define  PRE_INST_SCRIPT    " PreInst Script/Command"
+#define POST_INST_SCRIPT    "PostInst Script/Command"
+#endif
+
+#ifndef UPDATE_SYSTEM_COMMAND
+#define DPKG_UPDATE_SYSTEM_COMMAND   "apt update && yes|apt upgrade"
+#define  RPM_UPDATE_SYSTEM_COMMAND   "I don't' no"
+#endif
+
 class F_systemThread : public QThread{  // Function systenm() thread
     Q_OBJECT
 public:

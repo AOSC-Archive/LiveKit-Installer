@@ -12,8 +12,8 @@
 #include <QDebug>
 #include <QObject>
 
-int InstallGrub = false;
-int InstallEFI  = false;
+bool InstallGrub = false;
+bool InstallEFI  = false;
 QString GrubDest;
 QString EFIDest;
 
