@@ -11,11 +11,17 @@
 #include <QMap>
 #include <QDebug>
 #include <QObject>
+#include "installercore.h"
 
+
+#ifndef G_VAR
+#define G_VAR
 bool InstallGrub = false;
 bool InstallEFI  = false;
 QString GrubDest;
 QString EFIDest;
+#endif
+
 
 InstallerPage::InstallerPage(QWidget *parent):
     QWidget(parent){
@@ -391,7 +397,7 @@ void PartedPage::NextButtonClicked(){
     if(SLOT_NextButtonClicked() != 0){
         return;
     }
-    emit PartedDone();
+    emit PartedDone(InstallGrub,InstallEFI,GrubDest,EFIDest);
 }
 
 void PartedPage::ShowAddDialog(){

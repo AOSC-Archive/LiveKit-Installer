@@ -36,15 +36,14 @@
 #endif
 
 #ifndef INST_SCRIPT
-#define  PRE_INST_SCRIPT    " PreInst Script/Command"
-#define POST_INST_SCRIPT    "PostInst Script/Command"
+#define  PRE_INST_SCRIPT    " "
+#define POST_INST_SCRIPT    " "
 #endif
 
 #ifndef UPDATE_SYSTEM_COMMAND
-#define DPKG_UPDATE_SYSTEM_COMMAND   "apt update && yes|apt upgrade"
-#define  RPM_UPDATE_SYSTEM_COMMAND   "I don't' no"
+#define DPKG_UPDATE_SYSTEM_COMMAND   "chroot /target apt update && chroot /target yes|apt upgrade && chroot /target fc-cache"
+#define  RPM_UPDATE_SYSTEM_COMMAND   "chroot /target zypper ref -f && chroot /target fc-cache"
 #endif
-
 class F_systemThread : public QThread{  // Function systenm() thread
     Q_OBJECT
 public:
@@ -98,7 +97,7 @@ public slots:
     void setNumber(int i  ){
         qDebug()<< "Number is " << i << endl;
     }
-    void    switchWindowToPage2(void);
+    void    switchWindowToPage2(bool _InstallGrub, bool _InstallEFI, QString _GrubDest, QString _EFIDest);
     void    downloadDone(void);
     void    unpackDone(int);
     void    updatingSystemDone(int);
@@ -117,6 +116,11 @@ protected:
      F_getTarballThread *getTarballThread;
      double Progress;
      QWidget* MessageBoxWidget;
+
+     bool InstallGrub = false;
+     bool InstallEFI  = false;
+     QString GrubDest;
+     QString EFIDest;
 };
 
 

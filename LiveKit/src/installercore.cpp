@@ -57,7 +57,11 @@ void InstallerCore::launchGparted(){
     systemThread->start();
 }
 
-void InstallerCore::switchWindowToPage2(){
+void InstallerCore::switchWindowToPage2(bool _InstallGrub, bool _InstallEFI, QString _GrubDest, QString _EFIDest){
+    InstallGrub = _InstallGrub;
+    InstallEFI  = _InstallEFI;
+    GrubDest    = _GrubDest;
+    EFIDest     = _EFIDest;
     this->loadQml(QUrl("qrc:/qml/progress.qml"));
     if(DesktopEnvironment.isEmpty())
         exit(0);
@@ -117,6 +121,15 @@ void InstallerCore::unpackDone(int status){
         QMessageBox::warning(MessageBoxWidget,tr("Warning"),tr("Failed to execute PreInst script/command"),QMessageBox::Yes);
         exit(0);
     }
+    system("sudo mkdir /target/dev /target/proc /target/sys");
+    int s;
+ s =system("sudo mount --rbind /dev //target/dev &&  \
+            sudo mount --bind /proc //target/proc && \
+            sudo mount --bind /sys  /target/sys");
+    if (s != 0){
+           QMessageBox::warning(MessageBoxWidget,tr("Warning"),tr("Failed to mount target"),QMessageBox::Yes);
+           exit(0);
+    }
     systemThread->disconnect(   systemThread,SIGNAL(WorkDone(int)),this,SLOT(unpackDone(int)));
     this->connect(              systemThread,SIGNAL(WorkDone(int)),this,SLOT(updatingSystemDone(int)));
     if(this->PackageManager == "dpkg")
@@ -136,28 +149,30 @@ void InstallerCore::updatingSystemDone(int status){
     this->connect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(installOptionalFeaturesDone(int)));
     char ExecBuf[512] = {0};
     if(this->PackageManager == "dpkg")
-        sprintf(ExecBuf,"apt install ");
-        if(installArtwork){
-            strcat(ExecBuf,PNs_ARTWORK);
-            strcat(ExecBuf," ");
-        }
-        if(installChrome){
-            strcat(ExecBuf,PNs_CHROME);
-            strcat(ExecBuf," ");
-        }
-        if(installIM){
-            strcat(ExecBuf,PNs_IM);
-            strcat(ExecBuf," ");
-        }
-        if(installLibO){
-            strcat(ExecBuf,PNs_LIBO);
-            strcat(ExecBuf," ");
-        }
-        if(installWine){
-            strcat(ExecBuf,PNs_WINE);
-            strcat(ExecBuf," ");
-        }
-        systemThread->setExecCommand(ExecBuf);
+        sprintf(ExecBuf,"chroot /target apt install ");
+    else
+        sprintf(ExecBuf,"chroot /target zypper install");
+    if(installArtwork){
+        strcat(ExecBuf,PNs_ARTWORK);
+        strcat(ExecBuf," ");
+    }
+    if(installChrome){
+        strcat(ExecBuf,PNs_CHROME);
+        strcat(ExecBuf," ");
+    }
+    if(installIM){
+        strcat(ExecBuf,PNs_IM);
+        strcat(ExecBuf," ");
+    }
+    if(installLibO){
+        strcat(ExecBuf,PNs_LIBO);
+        strcat(ExecBuf," ");
+    }
+    if(installWine){
+        strcat(ExecBuf,PNs_WINE);
+        strcat(ExecBuf," ");
+    }
+    systemThread->setExecCommand(ExecBuf);
     emit this->installOptionalFeatures();
     systemThread->start();
 }
@@ -169,6 +184,17 @@ void InstallerCore::installOptionalFeaturesDone(int status){
     }
     systemThread->disconnect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(installOptionalFeaturesDone(int)));
     systemThread->connect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(performingPostInstallationDone(int)));
+    char ExecBuf[256] = {0};
+    if(InstallGrub){
+        if(InstallEFI){
+            system("mkdir /target/efi");
+            sprintf(ExecBuf,"mount %s /target/efi && chroot /target grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=AOSC-GRUB && ",EFIDest.toUtf8().data());
+        }else{
+            sprintf(ExecBuf,"chroot /target grub-install %s &&",GrubDest.toUtf8().data());
+        }
+        strcat(ExecBuf,"chroot /target grub-mkconfig -o /boot/grub/grub.cfg && ");
+        strcat(ExecBuf,POST_INST_SCRIPT);
+    }
     systemThread->setExecCommand(POST_INST_SCRIPT);
     emit this->performingPostInstallation();
     systemThread->start();
@@ -180,7 +206,7 @@ void InstallerCore::performingPostInstallationDone(int status){
         exit(0);
     }
     systemThread->disconnect(systemThread,SIGNAL(WorkDone(int)),this,SLOT(performingPostInstallationDone(int)));
-    emit this->installDone();
+    this->loadQml(QUrl("qrc:/qml/completion.qml"));
     // Then what should installer do?
 }
 

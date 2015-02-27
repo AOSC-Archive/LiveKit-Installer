@@ -250,7 +250,7 @@ public slots:
     void            EnableEFISupport(bool);
     void            NextButtonClicked();
 signals:
-    void            PartedDone();
+    void            PartedDone(bool InstallGrub, bool InstallEFI, QString GrubDest, QString EFIDest);
 private:
     MyTabWidget     *DeviceSelect;
     QPushButton     *ChangeButton;
