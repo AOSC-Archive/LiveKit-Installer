@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Basic definitions.
-SYSREL="beta2_obsedian"
+SYSREL="beta_pichu"
 
 # PRE-INSTALLATION CLEAN-UP
 rm /tmp/installation-config 
@@ -34,7 +34,7 @@ printf "\tFirstly, a big thank you for choosing to test our newest system releas
 \tto our bug tracker, http://bugs.anthonos.org.\n"
 printf "\n\n\tAOSC OS developers\n\n"
 echo "***********************************************************************************"
-printf "\n\n"
+printf "\n"
 enter_to_continue
 
 printf "As of why you are using this CLI based installer instead of the fancy QtQuick one,
@@ -202,9 +202,10 @@ elif [ "$EFI" = "no" ]; then
     true
 fi
 
+echo ""
 enter_to_continue
 
-printf "\n\033[1;33mReady?\033[0m
+printf "\033[1;33mReady?\033[0m
 Now, you shall take a deep breath before we officially starts the installation...\n\n"
 
 enter_to_continue
@@ -236,7 +237,7 @@ printf "\t\t\t\033[1;32m[OK]\033[0m\n"
 printf "Starting to download the system release...\t\t\033[1;36m[INFO]\033[0m\n"
 pushd /mnt/target > /dev/null
 # Automatic mirror for the community.
-axel -a http://mirrors.anthonos.org/os3-releases/01_Beta/01_Tarballs/aosc-os3_$DE-$SYSREL_$PM_en-US.tar.xz
+axel -a http://mirrors.anthonos.org/os3-releases/01_Beta/01_Tarballs/aosc-os3_"${DE}"-"${SYSREL}"_"${PM}"_en-US.tar.xz
 popd > /dev/null
 if [ $? -ne 0 ]; then
     printf "\nStarting to download the system release...\t\t\033[1;31m[FAILED]\033[0m\n"
@@ -248,7 +249,7 @@ fi
 # Extract this buggar
 printf "Unpacking the system image...\t\t\t\t\033[1;36m[INFO]\033[0m\n"
 pushd /mnt/target > /dev/null
-pv ${DE}_${PM}.tar.xz | tar xfJ -
+pv aosc-os3_"${DE}"-"${SYSREL}"_"${PM}"_en-US.tar.xz | tar xfJ -
 popd > /dev/null
 if [ $? -ne 0 ]; then
     printf "Unpacking the system image...\t\t\t\t\033[1;31m[FAILED]\033[0m\n"
@@ -322,20 +323,22 @@ else
     printf "Configuring GRUB...\t\t\t\t\t\033[1;32m[OK]\033[0m\n"
 fi
 
-# Clean up
+clear
+
+# DONE!
+printf "********************************************************************************\n
+Installation has successfully completed! Now we will perform some clean up. You may then
+reboot your machine and jump right into your fresh installation of AOSC OS.
+
+\033[36mDefault username is "aosc", password is "anthon"
+Default root password is "anthon", although using sudo is recommended.\033[0m
+********************************************************************************\n"
+
+enter_to_continue
+
 pushd /mnt/target > /dev/null
 umount -Rf dev proc sys
 popd > /dev/null
 umount -Rf /mnt/target
 
-# DONE!
-printf "\n\n********************************************************************************\n
-Installation has successfully completed! Now we will perform some clean up. You may then
-reboot your machine and jump right into your fresh installation of AOSC OS.
-
-Default username is "aosc", password is "anthon"
-Default root password is "anthon", although using sudo is recommended.
-********************************************************************************\n"
-
-enter_to_continue
 exit
