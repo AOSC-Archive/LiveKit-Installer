@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Basic definitions.
-SYSREL="beta_pichu"
+SYSREL="beta2_obsidian"
 
 # PRE-INSTALLATION CLEAN-UP
 rm /tmp/installation-config 
