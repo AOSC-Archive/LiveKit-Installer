@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Basic definitions.
+SYSREL="beta2_obsedian"
+
 # PRE-INSTALLATION CLEAN-UP
 rm /tmp/installation-config 
 umount -Rf /mnt/target
@@ -11,21 +14,28 @@ mkdir -p /mnt/target
 clear
 
 install_fail () {
-printf "\nThe installation of AOSC OS has failed. Please file a bug to http://bugs.anthonos.org,
-or find one of our developers at #anthon.\n"
-read -p "Press [Enter] to exit installation."
-exit
+    printf "\nThe installation of AOSC OS has failed. Please file a bug to http://bugs.anthonos.org,
+    or find one of our developers at #anthon.\n"
+    read -p "Press [Enter] to exit installation."
+    exit
 }
 
-printf "********************************************************************************\n"
+enter_to_continue () {
+    printf "\033[36m-> Press [Enter] to continue...\033[0m"
+    read -p ""
+    clear
+}
+
+
+echo "***********************************************************************************"
 printf "\n\t\033[33mFellow Beta testers...\033[0m\n\n"
 printf "\tFirstly, a big thank you for choosing to test our newest system release.
 \tWe are ready to take your issue reports so please feel free to file them 
 \tto our bug tracker, http://bugs.anthonos.org.\n"
 printf "\n\n\tAOSC OS developers\n\n"
-printf "********************************************************************************\n\n"
-read -p "Press [Enter] to continue..."
-clear
+echo "***********************************************************************************"
+printf "\n\n"
+enter_to_continue
 
 printf "As of why you are using this CLI based installer instead of the fancy QtQuick one,
 well sadly, as a matter of fact for now, we are not yet ready to ship it with our 
@@ -38,22 +48,25 @@ printf "\033[1;37mBefore you start, make sure...\033[0m
 3. Think twice before you proceed, this is a \033[1;31mBETA\033[0m release and it probably 
    contains multiple bugs that may affect your daily drive;\n\n"
 
+enter_to_continue
+
 printf "\033[1;36mSTOP I. Choose a Package Manager\033[0m
-AOSC OS supports DPKG and RPM as system package manager. \033[1;31mDPKG\033[0m builds are probably more 
-newbie-friendly as they come with PackageKit support (and a graphical frontend for it);
-\033[1;31mRPM\033[0m can take some time to get used to, but they often provides a more reliable working
-environment as they are more careful with possible dependency breakage.\n\n"
+
+AOSC OS supports DPKG and RPM as system package manager. \033[1;31mDPKG\033[0m and \033[1;31mRPM\033[0m now provide 
+equal support, they both now support PackageKit and all of its graphical frontends. 
+
+* As of Beta 1, RPM builds did not ship with packagekit support.\n\n"
 
 PS3='Choose the package manager of your choice: '
-options=("DPKG" "RPM" "Quit")
+options=("DPKG (Debian Packages)" "RPM (RedHat Package Manager)" "Quit")
 select opt in "${options[@]}"
 do
     case $opt in
-        "DPKG")
+        "DPKG (Debian Packages)")
             echo PM=dpkg >> /tmp/installation-config
             break
             ;;
-        "RPM")
+        "RPM (RedHat Package Manager)")
             echo PM=rpm >> /tmp/installation-config
             break
             ;;
@@ -66,7 +79,10 @@ do
     esac
 done
 
-printf "\n\033[1;36mSTOP II. Choose a Desktop Environment\033[0m
+clear
+
+printf "\033[1;36mSTOP II. Choose a Desktop Environment\033[0m
+
 AOSC OS provides multiple desktop environment by default, choose one from below, and
 make good choices!\n\n"
 
@@ -108,7 +124,10 @@ do
     esac
 done
 
-printf "\n\033[1;36mSTOP III. Optional Features\033[0m
+clear
+
+printf "\033[1;36mSTOP III. Optional Features\033[0m
+
 AOSC OS tries to include best softwares with the system release, but sadly with some 
 limitations like \033[1;31mlicensing for redistribution\033[0m and \033[1;31minstalation sizes\033[0m, we were not 
 able to include some great softwares with our AOSC OS releases. But with help from 
@@ -142,62 +161,53 @@ for i in ${!features[@]}; do
     echo OPTFEATURES\+=\"`[[ "${choices[i]}" ]] && printf " %s" "${features[i]}"`\" >> /tmp/installation-config
 done
 
-printf "\n\033[1;36mSTOP IV. Target Customization\033[0m
-In this stop you will need to decide on your partition setup, filesystem choice
-\033[1;31m(AND ***NOT YET IMPLEMENTED*** USER SETTINGS)\033[0m. Please get a cup of coffee if
-you are dizzy by now. You would need to be extremely cautious at this step, any
-changes that would be made here are \033[1;31mnot amendable.\033[0m\n\n"
+clear
 
-printf "\033[1;33mSTEP 1. Partition Decision\033[0m
-Now, double click on the \"GParted\" icon on the desktop, \033[1;31mselect\033[0m and \033[1;31mformat\033[0m a 
-partition you would want AOSC OS to be installed on.\n\n"
+printf "\033[1;36mSTOP IV. Target Customization\033[0m
+
+In this stop you will need to decide on your partition setup, filesystem choice
+\033[1;31m(and not yet implemented user settings)\033[0m. Please get a cup of coffee if
+you are dizzy by now. You would need to be extremely cautious at this step, any
+changes that would be made here are \033[1;31mnot amendable.\033[0m
+
+\033[1;33m(!) Partition Decision\033[0m
+Now, double click on the \"GParted\" icon on the desktop, \033[1;31mselect\033[0m and \033[1;31mformat\033[0m 
+a partition you would want AOSC OS to be installed on.\n\n"
 
 read -r -p "Are you using a EFI based system or GUID partition table? [y/N] " response
 case $response in
     Y|y) 
         echo EFI=yes >> /tmp/installation-config
-        break
         ;;
     N|n)
         echo EFI=no >> /tmp/installation-config
-        break
         ;;
     *)
         printf "Invalid response!\n"
         ;;
 esac
 
-read -p "Press [ENTER] when you are done."
-
-printf "\n\033[1;36mType the partition device name /dev/sdxN (x is an alphabetical letter, and
-N is a natural integer), followed by [ENTER]: \033[0m"
-read TARGETPART
+printf "\nType the partition device name /dev/sdxN \033[1;36m(x is an alphabetical letter, and N is 
+a natural integer)\033[0m, followed by [ENTER].\n\n"
+read -p "    -> Partition device name: " TARGETPART
 echo TARGETPART=$TARGETPART >> /tmp/installation-config
 
 source /tmp/installation-config
 if [ "$EFI" = "yes" ]; then
-    printf "\n\033[1;36mType the ESP device name /dev/sdxN (x is an alphabetical letter, $
-N is a natural integer), followed by [ENTER]: \033[0m"
-    read ESP
+    printf "\nType the ESP device name /dev/sdxN \033[1;36m(x is an alphabetical letter, and N is 
+a natural integer) \033[0m, followed by [ENTER]:\n\n"
+    read -p "    -> ESP device name: " ESP
     echo ESP=$ESP >> /tmp/installation-config
 elif [ "$EFI" = "no" ]; then
     true
 fi
 
-printf "\n\033[1;33mSTEP 2. Pre-launch Test\033[0m
-Before we will finally start installing, please double check that...
+enter_to_continue
 
-\033[1;31m1. YOU ARE CONNECTED TO THE INTERNET (TRY OPENING UP \033[1;36mhttp://repo.anthonos.org\033[1;31m BY
-   CLICKING ON THE LINK INSIDE OF THE TERMINAL WINDOW);
-2. YOUR AC PLUG IS SECURED, IF YOU ARE USING A LAPTOP;\033[0m\n\n"
-
-read -p "Press [ENTER] when you are sure everything's good."
-
-printf "\n\033[1;33mSTEP 3. Take a Deep Breath\033[0m
+printf "\n\033[1;33mReady?\033[0m
 Now, you shall take a deep breath before we officially starts the installation...\n\n"
 
-printf "Press [ENTER] to officially begin the installation."
-read -p  ""
+enter_to_continue
 
 clear
 
@@ -225,8 +235,8 @@ printf "\t\t\t\033[1;32m[OK]\033[0m\n"
 # Download the tarball
 printf "Starting to download the system release...\t\t\033[1;36m[INFO]\033[0m\n"
 pushd /mnt/target > /dev/null
-# USTC for now, before we get done with the automatic mirror redirection...
-axel -a http://mirrors.ustc.edu.cn/anthon/os3-releases/LATEST_TARBALL/${DE}_${PM}.tar.xz 
+# Automatic mirror for the community.
+axel -a http://mirrors.anthonos.org/os3-releases/01_Beta/01_Tarballs/aosc-os3_$DE-$SYSREL_$PM_en-US.tar.xz
 popd > /dev/null
 if [ $? -ne 0 ]; then
     printf "\nStarting to download the system release...\t\t\033[1;31m[FAILED]\033[0m\n"
@@ -321,10 +331,11 @@ umount -Rf /mnt/target
 # DONE!
 printf "\n\n********************************************************************************\n
 Installation has successfully completed! Now we will perform some clean up. You may then
-reboot your machine and jump right into your fresh installation of AOSC OS.\n\n
+reboot your machine and jump right into your fresh installation of AOSC OS.
+
 Default username is "aosc", password is "anthon"
 Default root password is "anthon", although using sudo is recommended.
 ********************************************************************************\n"
 
-read -p "Press [ENTER] when you are sure everything's good."
+enter_to_continue
 exit
