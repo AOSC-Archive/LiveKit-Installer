@@ -118,7 +118,7 @@ do
         "Quit")
             exit
             ;;
-        *)
+        *)https://gi
             printf "\033[1;31mHey! invalid choice!\033[0m\n"
             ;;
     esac
@@ -233,11 +233,17 @@ printf "Making sure the partition is empty..."
 rm -rf /mnt/target/*
 printf "\t\t\t\033[1;32m[OK]\033[0m\n"
 
+# Retrieve latest release
+printf "Starting to download list of system releases...\t\t\033[1;36m[INFO]\033[0m\n"
+pushd /tmp
+axel -a http://mirrors.anthonos.org/os3-releases/LATEST_SYSTEM_TARBALLS
+popd
+
 # Download the tarball
 printf "Starting to download the system release...\t\t\033[1;36m[INFO]\033[0m\n"
 pushd /mnt/target > /dev/null
 # Automatic mirror for the community.
-axel -a http://mirrors.anthonos.org/os3-releases/01_Beta/01_Tarballs/aosc-os3_"${DE}"-"${SYSREL}"_"${PM}"_en-US.tar.xz
+axel -a `grep $DE /tmp/LATEST_SYSTEM_TARBALLS | grep $PM`
 popd > /dev/null
 if [ $? -ne 0 ]; then
     printf "\nStarting to download the system release...\t\t\033[1;31m[FAILED]\033[0m\n"
