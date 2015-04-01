@@ -103,8 +103,6 @@ check_die(){
 # Argument Parsing
 [ "$(basename "$0")" == cliinst-base ] && echo $"Sorry, but this script is not intended to be run independently." && exit 1
 [ "$1" == -h ] && echo -e $"$0, a part of AOSC LiveKit installer.
-: ${u_conf=y} ${config=/tmp/installation-config} ${mirror=http://mirrors.anthonos.org/anthon} ${target=/mnt/target}
-
 \e[1mUSAGE:\e[0m
 $0 [ -n ] [ -c config_file ] [ -t mount_target ] [ -m mirror_url ]
 $0 -h
@@ -114,7 +112,7 @@ $0 -h
 -t dir\tSets the chroot and mount target.
 -m URL\tSets the mirror root URL." && exit 0
 
-
+: ${u_conf=y} ${config=/tmp/installation-config} ${mirror=http://mirrors.anthonos.org/anthon} ${target=/mnt/target}
 while true; do
     case "$1" in
         -n)
