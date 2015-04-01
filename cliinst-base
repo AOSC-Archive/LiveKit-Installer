@@ -82,11 +82,14 @@ opttoggle(){
 }
 
 infocols(){ echo $(((COLUMNS>120?120:COLUMNS)-${#1}-6)); }
+# With the CR, we always return to the line beginning and produce the correct tab position.
+# padtab Line [TABS]
+padtab(){ printf "\r$1$(pad $'\t' ${2:-$((( (COLUMNS>120?120:COLUMNS)-${#2}-6)/8))})"; }
 # info_progress Line [TABS]
-info_progress(){ echo -e "$1$(pad $'\t' ${2:-$((( (COLUMNS>120?120:COLUMNS)-${#1}-6)/8))})${INFO}[INFO]${NORM}"; }
+info_progress(){ padtab "$@"; echo -e "${INFO}[INFO]${NORM}"; }
 # check_die Line [TABS]
 check_die(){
-    printf "\r$1$(pad $'\t' ${2:-$((( (COLUMNS>120?120:COLUMNS)-${#2}-6)/8))})"
+    padtab "$@"
     if [ $? -ne 0 ]; then
         echo -e "${ERRO}[FAIL]${NORM}"
         install_die
