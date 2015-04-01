@@ -86,11 +86,12 @@ infocols(){ echo $(((COLUMNS>120?120:COLUMNS)-${#1}-6)); }
 info_progress(){ echo -e "$1$(pad $'\t' ${2:-$((( (COLUMNS>120?120:COLUMNS)-${#1}-6)/8))})${INFO}[INFO]${NORM}"; }
 # check_die Line [TABS]
 check_die(){
+    printf "\r$1$(pad $'\t' ${2:-$((( (COLUMNS>120?120:COLUMNS)-${#2}-6)/8))})"
     if [ $? -ne 0 ]; then
-        echo -e "$1$(pad $'\t' ${2:-$((( (COLUMNS>120?120:COLUMNS)-${#2}-6)/8))})${ERRO}[FAIL]${NORM}"
+        echo -e "${ERRO}[FAIL]${NORM}"
         install_die
     else
-        echo -e "$1$(pad $'\t' ${2:-$((( (COLUMNS>120?120:COLUMNS)-${#2}-6)/8))})${NOTE}[ OK ]${NORM}"
+        echo -e "${NOTE}[ OK ]${NORM}"
     fi
 }
 
@@ -98,12 +99,9 @@ check_die(){
 
 # Argument Parsing
 [ "$(basename "$0")" == cliinst-base ] && echo $"Sorry, but this script is not intended to be run independently." && exit 1
-
+[ "$1" == -h ] && echo -e $"$0, a part of AOSC LiveKit installer.
 : ${u_conf=y} ${config=/tmp/installation-config} ${mirror=http://mirrors.anthonos.org/anthon} ${target=/mnt/target}
 
-
-[ "$1" == -h ] && echo -e $"$0, a part of AOSC LiveKit installer.
-            
 \e[1mUSAGE:\e[0m
 $0 [ -n ] [ -c config_file ] [ -t mount_target ] [ -m mirror_url ]
 $0 -h
