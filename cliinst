@@ -1,7 +1,4 @@
 #!/bin/bash
-if [ $(which pkexec) ]; then
-    pkexec --disable-internal-agent "/usr/bin/cliinst.sh" 
-else
-    /usr/bin/cliinst.sh
-fi
-
+which pkexec &>/dev/null && exec pkexec --disable-internal-agent "/usr/bin/cliinst.sh" "$@"
+exec /usr/bin/cliinst.sh "$@"
+echo "What???????"; exit 1

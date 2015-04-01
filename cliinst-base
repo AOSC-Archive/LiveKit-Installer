@@ -1,0 +1,140 @@
+#!/bin/bash
+# /usr/bin/cliinst-base: Too lazy to do copypasta.
+# vim: expandtab:tabstop=4:softtabstop=4:autoindent
+
+# Gettext magic: bash --dump-po-strings $0 > ${0/sh/po}
+# Please, add metadata and dedup the msgids after you make a pot file from this.
+# http://www.gnu.org/software/gettext/manual/html_node/bash.html
+# We DO trust our translators (ourselves).
+### TODO 0: Shall we merge this with the LiveKit Installer?
+### TODO 1: DEDUP, always dedup, or case and switch would hang.
+### NOTE 0: We assign gettext $"msgid" syntax to switch-cases where needed.
+TEXTDOMAIN="aosc-inst"
+TEXTDOMAINDIR="/usr/share/locale"
+
+shopt -s checkwinsize # Refresh COLUMNS and LINES
+# Pre-escaped Formatting
+NOTE=$'\e[1;32m'
+ITEM=$'\e[1;34m'
+ERRO=$'\e[1;31m'
+INFO=$'\e[1;36m'
+AHEY=$'\e[1;33m'
+NORM=$'\e[0m'
+PROM=$'\e[36m'
+
+# Functions
+pad(){ local i; for ((i=0;i<$1;i++)); do echo -ne "${2:- }"; done; }
+SEP="$(getcol; pad $((COLUMNS>120?120:COLUMNS)) '*')"
+sep(){ echo "$SEP"; }
+indprint(){ echo -e "$*" | fold -sw $(((COLUMNS>120?120:COLUMNS)-4)) | sed 's/^/  /g'; }
+press_enter () { read -p "${PROM}    "$"-> Press [Enter] to continue...""${NORM}  "; }
+block_info(){ sep; indprint "$*"; sep; echo; }
+switch_prompt(){ PS3="${PROM}    -> $1   ${NORM}"; }
+invalid_choice(){ echo -e $"${ERRO}Hey! Invalid choice!${NORM}\n"; }
+install_die () {
+    block_info $"The installation of AOSC OS has failed. Please file a bug to http://bugs.anthonos.org, or find one of our developers at #anthon."
+    press_enter
+}
+
+learn_more(){ [ "$1" ] || return 1; declare -n ptr="MORE_$1"; indprint "$ptr"; }
+
+# var_save varname varval
+# Assuming no non-alphanumeric characters in $1
+var_save(){
+    [ "$2" ] || return 1
+    # [ "$3" ] && set -- $1 $(keyval_conv "$2" "$3" "$4")
+    export $1="$2"
+    [ $u_conf == y ] && echo $(declare -p) >> $config
+}
+
+select_save(){ var_save "$@"; break; }
+
+# keyval_conv KEY KEYS VALS
+# Assume KEYS and VALS are valid to_array-able strings.
+keyval_conv(){
+    to_array keys "$2"
+    to_array vals "$3"
+    [ "${#keys[@]}" == "${#vals[@]}" ] || return 1
+    local index=0
+    for i in "${keys[@]}"; do
+        [ "$i" == "$1" ] && echo "${vals[index]}" && return 0
+        ((index++))
+    done
+}
+
+# to_array array_name ARRAY_SET
+# Crude and simple implementation using eval set.
+to_array(){
+    [ -z "$2" ] && return 1
+    local arr=$1
+    eval $arr='()'
+    eval set -- $2
+    for i; do eval "$arr+=('$i')"; done
+}
+
+# opttoggle KEY [KEYS VALS]
+opttoggle(){
+    [ "$3" ] && set -- $(keyval_conv "$1" "$2" "$3")
+    set -xv
+    for pak in $OPTPAKS; do [ "$pak" == "$1" ] && OPTPAKS=${OPTPAKS/$1 /} && return 0; done
+    OPTPAKS+="$1 "
+    set +xv
+}
+
+infocols(){ echo $(((COLUMNS>120?120:COLUMNS)-${#1}-6)); }
+# With the CR, we always return to the line beginning and produce the correct tab position.
+# padtab Line [TABS]
+padtab(){ printf "\r$1$(pad $'\t' ${2:-$((( (COLUMNS>120?120:COLUMNS)-${#2}-6)/8))})"; }
+# info_progress Line [TABS]
+info_progress(){ padtab "$@"; echo -e "${INFO}[INFO]${NORM}"; }
+# check_die Line [TABS]
+check_die(){
+    padtab "$@"
+    if [ $? -ne 0 ]; then
+        echo -e "${ERRO}[FAIL]${NORM}"
+        install_die
+    else
+        echo -e "${NOTE}[ OK ]${NORM}"
+    fi
+}
+
+
+
+# Argument Parsing
+[ "$(basename "$0")" == cliinst-base ] && echo $"Sorry, but this script is not intended to be run independently." && exit 1
+[ "$1" == -h ] && echo -e $"$0, a part of AOSC LiveKit installer.
+\e[1mUSAGE:\e[0m
+$0 [ -n ] [ -c config_file ] [ -t mount_target ] [ -m mirror_url ]
+$0 -h
+
+-n\tDo not use a config file.
+-c file\tUse the specified config file.
+-t dir\tSets the chroot and mount target.
+-m URL\tSets the mirror root URL." && exit 0
+
+: ${u_conf=y} ${config=/tmp/installation-config} ${mirror=http://mirrors.anthonos.org/anthon} ${target=/mnt/target}
+while true; do
+    case "$1" in
+        -n)
+            echo $"Not using a config file."
+            export u_conf=n
+            shift 1 || break;;
+        -c)
+            echo $"Setting config file to $2."
+            export config="$2"
+            shift 2 || break;;
+        -t)
+            echo $"Setting mount target to $2."
+            export target="$2"
+            shift 2 || break;;
+        -g)
+            echo $"Setting mirror to $2."
+            export mirror="$2"
+            shift 2 || break;;
+        *)
+            echo $"What is \`$1'?"
+            shift 1;;
+    esac
+done
+
+
