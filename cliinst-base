@@ -24,7 +24,7 @@ PROM=$'\e[36m'
 
 # Functions
 pad(){ local i; for ((i=0;i<$1;i++)); do echo -ne "${2:- }"; done; }
-SEP="$(getcol; pad $((COLUMNS>120?120:COLUMNS)) '*')"
+SEP="$($COLUMNS; pad $((COLUMNS>120?120:COLUMNS)) '*')"
 sep(){ echo "$SEP"; }
 indprint(){ echo -e "$*" | fold -sw $(((COLUMNS>120?120:COLUMNS)-4)) | sed 's/^/  /g'; }
 press_enter () { read -p "${PROM}    "$"-> Press [Enter] to continue...""${NORM}  "; }
