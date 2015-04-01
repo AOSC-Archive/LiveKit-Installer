@@ -75,10 +75,8 @@ to_array(){
 # opttoggle KEY [KEYS VALS]
 opttoggle(){
     [ "$3" ] && set -- $(keyval_conv "$1" "$2" "$3")
-    set -xv
     for pak in $OPTPAKS; do [ "$pak" == "$1" ] && OPTPAKS=${OPTPAKS/$1 /} && return 0; done
     OPTPAKS+="$1 "
-    set +xv
 }
 
 infocols(){ echo $(((COLUMNS>120?120:COLUMNS)-${#1}-6)); }
