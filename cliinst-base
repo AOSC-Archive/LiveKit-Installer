@@ -20,7 +20,7 @@ ERRO=$'\e[1;31m'
 INFO=$'\e[1;36m'
 AHEY=$'\e[1;33m'
 NORM=$'\e[0m'
-PROM=$'\e[36m'
+PROM=$'\n\e[36m'
 
 # Functions
 pad(){ local i; for ((i=0;i<$1;i++)); do echo -ne "${2:- }"; done; }
@@ -28,7 +28,7 @@ SEP="$($COLUMNS; pad $((COLUMNS>120?120:COLUMNS)) '*')"
 sep(){ echo "$SEP"; }
 indprint(){ echo -e "$*" | fold -sw $(((COLUMNS>120?120:COLUMNS)-4)) | sed 's/^/  /g'; }
 press_enter () { read -p "${PROM}    "$"-> Press [Enter] to continue...""${NORM}  "; }
-block_info(){ sep; indprint "$*"; sep; echo; }
+block_info(){ clear; sep; indprint "$*"; sep; echo; }
 switch_prompt(){ PS3="${PROM}    -> $1   ${NORM}"; }
 invalid_choice(){ echo -e $"${ERRO}Hey! Invalid choice!${NORM}\n"; }
 install_die () {
@@ -113,28 +113,28 @@ $0 -h
 -m URL\tSets the mirror root URL." && exit 0
 
 : ${u_conf=y} ${config=/tmp/installation-config} ${mirror=http://mirrors.anthonos.org/anthon} ${target=/mnt/target}
-while true; do
-    case "$1" in
-        -n)
-            echo $"Not using a config file."
-            export u_conf=n
-            shift 1 || break;;
-        -c)
-            echo $"Setting config file to $2."
-            export config="$2"
-            shift 2 || break;;
-        -t)
-            echo $"Setting mount target to $2."
-            export target="$2"
-            shift 2 || break;;
-        -g)
-            echo $"Setting mirror to $2."
-            export mirror="$2"
-            shift 2 || break;;
-        *)
-            echo $"What is \`$1'?"
-            shift 1;;
-    esac
+
+
+while getopts ":nctm" opt; do
+  case $opt in
+    n)
+        echo $"Not using a config file."
+        export u_conf=n
+        shift 1 || break;;
+    c)
+        echo $"Setting config file to $2."
+        export config="$2"
+        shift 2 || break;;
+    t)
+        echo $"Setting mount target to $2."
+        export target="$2"
+        shift 2 || break;;
+    m)
+        echo $"Setting mirror to $2."
+        export mirror="$2"
+        shift 2 || break;;
+    \?)
+        echo "Invalid option: -$OPTARG" >&2
+        ;;
+  esac
 done
-
-
