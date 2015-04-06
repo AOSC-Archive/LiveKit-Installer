@@ -80,7 +80,7 @@ if [ -r $config ]; then
 fi
 
 # PRE-INSTALLATION CLEAN-UP
-mv $config $config.$(date+%s)
+mv $config $config.$(date +%s)
 umount -Rf /mnt/target
 unset OPTFEATURES
 
