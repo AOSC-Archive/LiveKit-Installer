@@ -68,14 +68,14 @@ popd > /dev/null
 # Install optional features
 info_progress $"Installing optional features..."
 if [ "$PM" = "dpkg" ]; then
-   if [ ! -z "$OPTFEATURES" ]; then
+   if [ ! -z "$OPTPAKS" ]; then
        chroot ${target} apt update --yes &&
-       chroot ${target} apt install $OPTFEATURES --yes 
+       chroot ${target} apt install $OPTPAKS --yes 
    fi
 elif [ "$PM" = "rpm" ]; then
-   if [ ! -z "$OPTFEATURES" ]; then
+   if [ ! -z "$OPTPAKS" ]; then
        chroot ${target} zypper refresh &&
-       yes | chroot ${target} zypper install $OPTFEATURES 
+       yes | chroot ${target} zypper install $OPTPAKS 
    fi
 else ! echo $"There must be something wrong with the \$PM=$PM variable."
 fi
@@ -104,8 +104,8 @@ $SEP
 Installation has successfully completed! Now we will perform some clean up. You may then
 reboot your machine and jump right into your fresh installation of AOSC OS.
 
-${PROM}Default username is \e[33m\"aosc\", ${PROM}password is \e[33m\"anthon\"${PROM}
-Default root password is \e[33m\"anthon\", ${PROM}although using sudo is recommended.${NORM}
+${PROM}Default username is \e[33m\"aosc\"\e[36m , ${PROM}password is \e[33m\"anthon\"\e[36m ; ${PROM}
+Default root password is also \e[33m\"anthon\"\e[36m , ${PROM}although using sudo is recommended.${NORM}
 
 $SEP
 "
