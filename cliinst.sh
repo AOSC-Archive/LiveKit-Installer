@@ -198,10 +198,11 @@ Now, double click on the \"GParted\" icon on the desktop, ${ERRO}select${NORM} a
 "
 
 # Remember, your invalid response is not requesting a re-entry of the code.
-while read -n 1 -rep $"Are you using a EFI based system or GUID partition table? [y/N] " -i EFI
+while read -n 1 -rep $"Are you using a EFI based system or GUID partition table? [y/N] " EFI
 do
     case "$EFI" in
-        [Yy]|[Nn]) select_save EFI "$EFI";;
+        [Yy] | [Yy] ) select_save EFI "$EFI";;
+        [Nn] | [Nn] ) select_save EFI "$EFI";;
         *) printf "Invalid response!\n" ;;
     esac
 done
@@ -240,4 +241,4 @@ Now, you shall take a deep breath before we officially start the installation...
 press_enter
 
 clear
-exec cliinst_do "$@"
+exec cliinst-do "$@"

@@ -44,7 +44,7 @@ var_save(){
     [ "$2" ] || return 1
     # [ "$3" ] && set -- $1 $(keyval_conv "$2" "$3" "$4")
     export $1="$2"
-    [ $u_conf == y ] && echo $(declare -p) >> $config
+    [ $u_conf == y ] && echo -e "$(declare -p)\n" >> $config
 }
 
 select_save(){ var_save "$@"; break; }
