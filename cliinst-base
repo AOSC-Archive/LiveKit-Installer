@@ -82,13 +82,14 @@ opttoggle(){
 infocols(){ echo $(((COLUMNS>120?120:COLUMNS)-${#1}-6)); }
 # With the CR, we always return to the line beginning and produce the correct tab position.
 # padtab Line [TABS]
-padtab(){ printf "\r$1$(pad $'\t' ${2:-$((( (COLUMNS>120?120:COLUMNS)-${#2}-6)/8))})"; }
+padtab(){ printf "\r$1$(pad ${2:-$((( (COLUMNS>120?120:COLUMNS)-${#2}-6)/8))})" $'\t'; }
 # info_progress Line [TABS]
 info_progress(){ padtab "$@"; echo -e "${INFO}[INFO]${NORM}"; }
 # check_die Line [TABS]
 check_die(){
+	local _ret="$?"
     padtab "$@"
-    if [ $? -ne 0 ]; then
+    if [ $_ret -ne 0 ]; then
         echo -e "${ERRO}[FAIL]${NORM}"
         install_die
     else
@@ -111,28 +112,23 @@ $0 -h
 -m URL\tSets the mirror root URL." && exit 0
 
 : ${u_conf=y} ${config=/tmp/installation-config} ${mirror=http://mirrors.anthonos.org/anthon} ${target=/mnt/target}
-
-
-while getopts ":nctm" opt; do
+while getopts ":nc;t;m;" opt; do
   case $opt in
     n)
         echo $"Not using a config file."
-        export u_conf=n
-        shift 1 || break;;
+        u_conf=n;;
     c)
         echo $"Setting config file to $2."
-        export config="$2"
-        shift 2 || break;;
+        config="$2";;
     t)
         echo $"Setting mount target to $2."
-        export target="$2"
-        shift 2 || break;;
+        target="$2";;
     m)
         echo $"Setting mirror to $2."
-        export mirror="$2"
-        shift 2 || break;;
+        mirror="$2";;
     \?)
         echo "Invalid option: -$OPTARG" >&2
         ;;
   esac
 done
+export u_conf config mirror target
