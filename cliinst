@@ -82,7 +82,7 @@ fi
 # PRE-INSTALLATION CLEAN-UP
 mv $config $config.$(date +%s)
 umount -Rf /mnt/target
-unset OPTFEATURES
+unset OPTPAKS
 
 # DIRECTORY TREE CREATION
 mkdir -p /mnt/target
