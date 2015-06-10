@@ -104,7 +104,7 @@ $SEP
 Installation has successfully completed! Now we will perform some clean up. You may then
 reboot your machine and jump right into your fresh installation of AOSC OS.
 
-${PROM}Default username is \e[33m\`aosc'\e[36m, ${PROM}password is \e[33m`anthon'\e[36m; ${PROM}
+${PROM}Default username is \e[33m\`aosc'\e[36m, ${PROM}password is \e[33m\`anthon'\e[36m; ${PROM}
 Default root password is also \e[33m\`anthon'\e[36m , ${PROM}although using sudo is recommended.${NORM}
 ""
 $SEP
