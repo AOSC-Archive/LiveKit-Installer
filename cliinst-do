@@ -100,13 +100,13 @@ clear
 echo -e "
 
 $SEP
-
+"$"
 Installation has successfully completed! Now we will perform some clean up. You may then
 reboot your machine and jump right into your fresh installation of AOSC OS.
 
-${PROM}Default username is \e[33m\"aosc\", ${PROM}password is \e[33m\"anthon\"${PROM}
-Default root password is \e[33m\"anthon\", ${PROM}although using sudo is recommended.${NORM}
-
+${PROM}Default username is \e[33m\`aosc', ${PROM}password is \e[33m\"anthon\"${PROM}
+Default root password is \e[33m\`anthon', ${PROM}although using sudo is recommended.${NORM}
+""
 $SEP
 "
 
