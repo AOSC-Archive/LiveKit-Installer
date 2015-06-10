@@ -24,7 +24,7 @@ check_die
 
 # For you lazy people who do not want to clean your partition...
 info_progress $"Deleting all files in the target..."
-rm -rf "${target}/*"
+rm -rf "${target}"/*
 printf "\t\t\t${NOTE}[OK]${NORM}\n"
 
 # Retrieve latest release
@@ -90,7 +90,7 @@ info_progress $"Configuring GRUB..."
 if [ "$EFI" = "y" ]; then
     chroot "${target}" grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=AOSC-GRUB 
 else
-    chroot "${target}" grub-install "${TARGETPART}" # ERROR: SUBSTRING EXPR < 0
+    chroot "${target}" grub-install "${TARGETPART::-1}" # ERROR: SUBSTRING EXPR < 0
 fi
 chroot "${target}" grub-mkconfig -o /boot/grub/grub.cfg
 check_die $"Configuring GRUB..."
