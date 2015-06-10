@@ -201,22 +201,22 @@ Now, double click on the \"GParted\" icon on the desktop, ${ERRO}select${NORM} a
 while read -n 1 -rep $"Are you using a EFI based system or GUID partition table? [y/N] " EFI
 do
     case "$EFI" in
-        [Yy] | [Yy] ) select_save EFI "$EFI";;
-        [Nn] | [Nn] ) select_save EFI "$EFI";;
+        [Yy]) select_save EFI "y";;
+        [Nn]) select_save EFI "n";;
         *) printf "Invalid response!\n" ;;
     esac
 done
 
 echo -e $"
-Type the partition device name /dev/sdxN ${INFO}(x is an alphabetical letter, and N is 
-a natural integer)${NORM}, followed by [ENTER].
+Type the partition device name /dev/sdxN ${INFO}(where x is an alphabetical letter, and N is 
+an unsigned integer)${NORM}, followed by [ENTER].
 "
 
 switch_prompt $"Partition device name: "
 read -p "$PS3" TARGETPART
 echo TARGETPART=$TARGETPART >> /tmp/installation-config
 
-if [ "$EFI" = "yes" ]; then
+if [ "$EFI" == "y" ]; then
     echo -e $"
 Type in the ESP device name /dev/sdxN ${INFO}(x is an alphabetical letter, and N is 
 a natural integer) ${NORM}, followed by [ENTER]:
