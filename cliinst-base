@@ -33,6 +33,7 @@ invalid_choice(){ echo -e $"${ERRO}Hey! Invalid choice!${NORM}\n"; }
 install_die () {
     block_info $"The installation of AOSC OS has failed. Please file a bug to http://bugs.anthonos.org, or find one of our developers at #anthon."
     press_enter
+	((aosc_DEBUG)) || exit "${1-1}"
 }
 getval(){ declare -n var="${1:SEP}"; echo "$var"; }
 learn_more(){ [ "$1" ] || return 1; declare -n ptr="MORE_$1"; indprint "$ptr"; }
@@ -87,9 +88,9 @@ info_progress(){ padtab "$@"; echo -e "${INFO}[INFO]${NORM}"; }
 check_die(){
 	local _ret="$?"
     padtab "$@"
-    if [ $_ret -ne 0 ]; then
+    if ((_ret)); then
         echo -e "${ERRO}[FAIL]${NORM}"
-        install_die
+        install_die $_ret
     else
         echo -e "${NOTE}[ OK ]${NORM}"
     fi
