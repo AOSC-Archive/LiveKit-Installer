@@ -8,7 +8,7 @@
 # or echo foo > file.) Shall I split the script into 2 parts and add argument for loading different ones?
 # So what the filesystem check do you thing you are writing?
 
-if [ "$u_conf" == y ]; then
+if ((u_conf)); then
     printf "Reading installation configuration..."
     source "$config" && echo -e "\t\t\t${NOTE}[OK]${NORM}" || { 
         echo -e "\t\t\t${ERRO}[FAILED]${NORM}"
