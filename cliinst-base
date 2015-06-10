@@ -37,44 +37,45 @@ install_die () {
 }
 learn_more(){ [ "$1" ] || return 1; declare -n ptr="MORE_$1"; indprint "$ptr"; }
 
-# var_save varname [varval=$varname] [varval as array]
+# var_save varname [varval=$varname | KEY KEYS VALS]
 # Assuming no non-alphanumeric characters in $1
 # returns 1 if not u_conf or config writing failed.
 # returns 2 if no varname is supplied.
 var_save(){
 	[ "$1" ] || return 2
 	declare -n var="$1"
-    [ "$3" ] && set -- "$1" $(keyval_conv "$2" "$3" "$4")
+    [ "$3" ] && set -- "$1" "$(keyval_conv "$2" "$3" "$4")"
     export var="${2-$var}"
     ((u_conf)) && declare -p "$1" >> "$config"
 }
 
 select_save(){ var_save "$@"; break; }
 
-# keyval_conv KEY KEYS VALS
+# keyval_conv KEY KEYS VALS -> VAlS[KEY]
 # Assume KEYS and VALS are valid to_array-able strings.
 keyval_conv(){
-    to_array keys "$2"
-    to_array vals "$3"
+	local keys vals
+    to_array keys "$2" &&
+    to_array vals "$3" || return 2
     [ "${#keys[@]}" == "${#vals[@]}" ] || return 1
     local index=0
     for i in "${keys[@]}"; do
-        [ "$i" == "$1" ] && echo "${vals[index]}" && return 0
-        ((index++))
+        [ "$i" == "$1" ] && echo "${vals[$((++index))]}" && return 0
     done
 }
 
-# to_array array_name ARRAY_SET
+# to_array <out>array_name ARRAY_SET
 to_array(){
 	[ "$1" ] || return 2
 	declare -n arr="$1"
 	shift; arr=("$@")
 }
 
-# opttoggle KEY [KEYS VALS]
+# opttoggle KEY [<dict = KEYS VALS>]
 opttoggle(){
-    [ "$3" ] && set -- $(keyval_conv "$1" "$2" "$3")
-    for pak in $OPTPAKS; do [ "$pak" == "$1" ] && OPTPAKS=${OPTPAKS/$1 /} && return 0; done
+	local pak
+    [ "$3" ] && set -- "$(keyval_conv "$1" "$2" "$3")"
+    for pak in $OPTPAKS; do [ "$pak" == "$1" ] && OPTPAKS="${OPTPAKS/$1 /}" && return 0; done
     OPTPAKS+="$1 "
 }
 
