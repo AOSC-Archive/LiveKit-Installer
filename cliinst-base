@@ -1,7 +1,7 @@
 #!/bin/bash
 # /usr/bin/cliinst-base: Too lazy to do copypasta.
 # vim: expandtab:tabstop=4:softtabstop=4:autoindent
-
+which pkexec &>/dev/null && exec pkexec --disable-internal-agent "$0" "$@"
 # Gettext magic: bash --dump-po-strings $0 > ${0/sh/po}
 # Please, add metadata and dedup the msgids after you make a pot file from this.
 # http://www.gnu.org/software/gettext/manual/html_node/bash.html
