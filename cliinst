@@ -171,7 +171,7 @@ select opt in Wine LibreOffice $"AOSC Artwork" $"Fcitx Chinese Input" "Google Ch
 do
     case $opt in
         Wine|LibreOffice|$"AOSC Artwork"|$"Fcitx Chinese Input"|"Google Chrome")
-            opttoggle "$opt" "Wine LibreOffice"\ \'$"AOSC Artwork"\'\ \'$"Fcitx Chinese Input"\'\ \'"Google Chrome"\' \
+            opttoggle "$opt" "Wine LibreOffice '"$"AOSC Artwork""' '"$"Fcitx Chinese Input""' 'Google Chrome'"
                 'wine libreoffice aosc-artwork fcitx google-chrome'
             ;;
         $"That's All.") break;;

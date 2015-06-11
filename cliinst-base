@@ -1,6 +1,6 @@
 #!/bin/bash
 # /usr/bin/cliinst-base: Too lazy to do copypasta.
-# vim: expandtab:tabstop=4:softtabstop=4:autoindent
+# vim: tabstop=4:softtabstop=4:autoindent
 which pkexec &>/dev/null && exec pkexec --disable-internal-agent "$0" "$@"
 # Gettext magic: bash --dump-po-strings $0 > ${0/sh/po}
 # Please, add metadata and dedup the msgids after you make a pot file from this.
@@ -23,7 +23,7 @@ PROM=$'\n\e[36m'
 
 # Functions
 pad(){ local i; for ((i=0;i<$1;i++)); do echo -ne "${2:- }"; done; }
-SEP="$($COLUMNS; pad $((COLUMNS>120?120:COLUMNS)) '*')"
+SEP="$(pad $((COLUMNS>120?120:COLUMNS)) '*')"
 sep(){ echo "$SEP"; }
 indprint(){ echo -e "$*" | fold -sw $(((COLUMNS>120?120:COLUMNS)-4)) | sed 's/^/  /g'; }
 press_enter () { read -p "${PROM}    "$"-> Press [Enter] to continue...""${NORM}  "; }
@@ -54,7 +54,7 @@ select_save(){ var_save "$@"; break; }
 # keyval_conv KEY KEYS VALS -> VAlS[KEY]
 # Assume KEYS and VALS are valid to_array-able strings.
 keyval_conv(){
-	local keys vals
+	local keys vals i
     to_array keys "$2" &&
     to_array vals "$3" || return 2
     [ "${#keys[@]}" == "${#vals[@]}" ] || return 1
@@ -62,21 +62,26 @@ keyval_conv(){
     for i in "${keys[@]}"; do
         [ "$i" == "$1" ] && echo "${vals[$((++index))]}" && return 0
     done
+	return 1
 }
 
-# to_array <out>array_name ARRAY_SET
+# to_array <out>array_name "I AM AN ARRAY\ YES"
 to_array(){
 	[ "$1" ] || return 2
 	declare -n arr="$1"
-	shift; arr=("$@")
+	eval set -- $2
+	arr=("$@")
 }
 
 # opttoggle KEY [<dict = KEYS VALS>]
 opttoggle(){
 	local pak
     [ "$3" ] && set -- "$(keyval_conv "$1" "$2" "$3")"
-    for pak in $OPTPAKS; do [ "$pak" == "$1" ] && OPTPAKS="${OPTPAKS/$1 /}" && return 0; done
-    OPTPAKS+="$1 "
+	if [[ "$OPTPAKS" == *$1\ * ]]; then
+		OPTPAKS="${OPTPAKS/$1 /}"
+	else	
+		OPTPAKS+="$1 "
+	fi
 }
 
 infocols(){ echo $(((COLUMNS>120?120:COLUMNS)-${#1}-6)); }
