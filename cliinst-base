@@ -60,7 +60,8 @@ keyval_conv(){
     [ "${#keys[@]}" == "${#vals[@]}" ] || return 1
     local index=0
     for i in "${keys[@]}"; do
-        [ "$i" == "$1" ] && echo "${vals[$((++index))]}" && return 0
+        [ "$i" == "$1" ] && echo "${vals[index]}" && return 0
+		((index++))
     done
 	return 1
 }
@@ -68,9 +69,7 @@ keyval_conv(){
 # to_array <out>array_name "I AM AN ARRAY\ YES"
 to_array(){
 	[ "$1" ] || return 2
-	declare -n arr="$1"
-	eval set -- $2
-	arr=("$@")
+	eval "$1=($2)"
 }
 
 # opttoggle KEY [<dict = KEYS VALS>]

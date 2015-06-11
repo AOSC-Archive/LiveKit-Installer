@@ -179,7 +179,7 @@ do
         $"Quit") exit;;
         *) invalid_choice;;
     esac
-    echo $"Selected $OPTPAKS."
+    echo $"Selected ${OPTPAKS::-1}."
 done
 
 var_save OPTPAKS "$OPTPAKS"
