@@ -6,6 +6,7 @@
 
 def install_fail
 `whiptail --title "AOSC OS Installation" --msgbox "The installation is failed .." 10 60 3>&1 1>&2 2>&3`
+exit
 end
 
 # ============================================================
@@ -18,7 +19,7 @@ end
 # ============================================================
 
 def check
-	if [ $? != 0 ]; then
+	if $? != 0 then
     	puts "[FAILED]"
     	install_fail
 	else
@@ -175,7 +176,7 @@ def step3_2
 	j = 0
 	for i in @partsfinal do
 		a = (@partsfinal[j]).to_i
-		@cmdline += sprintf("\n\"%s\" \"%s\" \\", @parts[a], @partshuman[a])
+		@cmdline += sprintf("\n\"/dev/%s\" \"%s\" \\", @parts[a], @partshuman[a])
 		j += 1
 	end
 	@cmdline += " 3>&1 1>&2 2>&3 \`"
@@ -213,7 +214,7 @@ def step3_3
 	j = 0
 	for i in @partsfinal do
 		a = (@partsfinal[j]).to_i
-		@cmdline += sprintf("\n\"%s\" \"%s\" \\", @parts[a], @partshuman[a])
+		@cmdline += sprintf("\n\"/dev/%s\" \"%s\" \\", @parts[a], @partshuman[a])
 		j += 1
 	end
 	@cmdline += " 3>&1 1>&2 2>&3 \`"
@@ -228,7 +229,9 @@ end
 def step3
 	step3_1
 	step3_2
-	step3_3
+	if $EFI == "Yes" then
+		step3_3
+	end
 end
 
 # ============================================================
@@ -252,12 +255,13 @@ def install
 		puts "+	EFI target : " + $ESP
 	end
 	
-	$TARBALL = "aosc-os_" + $DE.downcase + "_" + $NICK + "_" + $PM + "_" + $DATE + "_" + $LANG + ".tar.xz" 
+	$TARBALL = sprintf("aosc-os_%s_%s_%s_%s_%s.tar.xz", $DE.downcase, $NICK, $PM.downcase, $DATE, $LANG) 
 	puts "TARBALL : " + $TARBALL
 	
 #	Mounting target	
-	puts `Mounting target`
+	puts "Mounting target"
 	cmdline = "`mount " + $TARGETPART + " /mnt/target`"
+	puts cmdline
 	eval(cmdline)
 	check
 
@@ -271,31 +275,35 @@ def install
 
 #	Decompress
 	puts "Unpacking the system image..."
-	`pushd /mnt/target > /dev/null
-	pv aosc-os3_"${DE}"-"${SYSREL}"_"${PM}"_en-US.tar.xz | tar xfJ -
-	popd > /dev/null`
+	cmdline = "`pv " + $TARBALL + " | tar xJf - -C /mnt/target`"
+	eval(cmdline)
+	check
 
 #	Prepare chroot
+	puts "Prepare for configuration"
 	`pushd /mnt/target > /dev/null
 	cp /etc/resolv.conf etc/
 	mount --bind /dev dev
 	mount --bind /proc proc
 	mount --bind /sys sys
-	genfstab -p /mnt/target >> /mnt/target/etc/fstab`
+	genfstab -p /mnt/target >> /mnt/target/etc/fstab
+	popd > /dev/null`
 	if "$EFI" == "Yes"  then
     	`mkdir /mnt/target/efi`
     	cmdline = "`mount " + $ESP + " /mnt/target/efi`"
     	eval(cmdline)
 	end
-	`popd > /dev/null`
-	`fs-cache`
+	#`fs-cache`
+	check
 	
 	puts "Configuring GRUB..."
-	if $EFI = "No" then
- 		cmdline = "`chroot /mnt/target grub-install " + $TARGETPART + " `"
+	targetp = $TARGETPART
+	targetp[-1] = " "
+	if $EFI == "No" then
+ 		cmdline = "`chroot /mnt/target grub-install --target=i386-pc " + targetp + " `"
  		eval(cmdline)
-	elsif $EFI = "Yes" then
-    	`chroot /mnt/target grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=AOSC-GRUB `
+	elsif $EFI == "Yes" then
+		`chroot /mnt/target grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=AOSC-GRUB `
 	end
 	`chroot /mnt/target grub-mkconfig -o /boot/grub/grub.cfg`
 	check
@@ -304,9 +312,9 @@ def install
 
 Default username is "aosc", password is "anthon"
 Default root password is "anthon", although using sudo is recommended." 15 60  3>&1 1>&2 2>&3`
-	`pushd /mnt/target > /dev/null`
-	`umount -Rf dev proc sys`
-	`popd > /dev/null`
+	`pushd /mnt/target > /dev/null
+	umount -Rf dev proc sys
+	popd > /dev/null`
 	`umount -Rf /mnt/target`
 	
 	`whiptail --title "AOSC OS Installation" --msgbox "Please remove your installation media and press Enter to reboot" 3>&1 1>&2 2>&3`
