@@ -17,6 +17,17 @@ end
 
 # ============================================================
 
+def check
+	if [ $? != 0 ]; then
+    	puts "[FAILED]"
+    	install_fail
+	else
+    	puts "[OK]"
+	end
+end
+
+# ============================================================
+
 def enter_to_continue
 `whiptail --title "AOSC OS Installation" --msgbox "Press enter to continue" 10 60 3>&1 1>&2 2>&3`
 end
@@ -24,13 +35,16 @@ end
 # ============================================================
 
 def pre_install
+
+$NICK = "cyanflame"
+$DATE = "20150708"
+$LANG = "en-US"
+
 `
 rm /tmp/installation-config 
 umount -Rf /mnt/target
 unset OPTFEATURES
 mkdir -p /mnt/target`
-
-$txt = File.open("/tmp/installation-config","w+")
 end
 
 # ============================================================
@@ -78,7 +92,7 @@ if @option == "?" then
 	step1
 end
 if $? == 0 then
-	$txt.puts("PM="+@option.downcase)
+	$PM=@option
 else
 	install_end
 end
@@ -105,7 +119,7 @@ if @option == "?" then
 	step2
 end
 if $? == 0 then
-	$txt.puts("DE="+@option.downcase)
+	$DE=@option
 else
 	install_end
 end
@@ -121,11 +135,11 @@ def step3_1
 `whiptail --title "AOSC OS Installation" --msgbox "STEP III. Target Customization
 
     In this stop you will need to decide on your partition setup, filesystem choice (and not yet implemented user settings). Please get a cup of coffee if you are feeling drowsynow. You would need to be extremely cautious at this step, any changes that would be made here are not amendable." 15 60 3>&1 1>&2 2>&3`
-@options = `whiptail --title "AOSC OS Installation" --menu "Are you using a EFI based system or GUID partition table?" 10 70 2 \
+@option = `whiptail --title "AOSC OS Installation" --menu "Are you using a EFI based system or GUID partition table?" 10 70 2 \
 "Yes" "I want to use EFI and GUID" \
 "No" "My motherboard wasn't support it or I don't want to use it" 3>&1 1>&2 2>&3`
 if $? == 0 then
-	$txt.puts("EFI="+@option.downcase)
+	$EFI=@option
 else
 	install_end
 end
@@ -167,7 +181,7 @@ def step3_2
 	@cmdline += " 3>&1 1>&2 2>&3 \`"
 	@option=eval(@cmdline)
 	if $? == 0 then
-		$txt.puts("TARGETPART="+@option.downcase)
+		$TARGETPART = @option
 		@diskaosc = @option
 	else
 		step3_2
@@ -205,8 +219,7 @@ def step3_3
 	@cmdline += " 3>&1 1>&2 2>&3 \`"
 	@option=eval(@cmdline)
 	if $? == 0 then
-		$txt.puts("ESP="+@option.downcase)
-		@disk = @option
+		$ESP = @option
 	else
 		install_end
 	end
@@ -233,7 +246,71 @@ end
 # ============================================================
 
 def install
-	`./install.sh 3>&1 1>&2 2>&3`
+	puts "Root target : " + $TARGETPART
+	puts "EFI : " + $EFI
+	if $EFI == "Yes" then
+		puts "+	EFI target : " + $ESP
+	end
+	
+	$TARBALL = "aosc-os_" + $DE.downcase + "_" + $NICK + "_" + $PM + "_" + $DATE + "_" + $LANG + ".tar.xz" 
+	puts "TARBALL : " + $TARBALL
+	
+#	Mounting target	
+	puts `Mounting target`
+	cmdline = "`mount " + $TARGETPART + " /mnt/target`"
+	eval(cmdline)
+	check
+
+#	Clean target
+	puts "Making sure the partition is empty..."
+	`rm -rf /mnt/target/*`
+	check
+	
+#	Check tarball
+	# (I don't know what to do now)
+
+#	Decompress
+	puts "Unpacking the system image..."
+	`pushd /mnt/target > /dev/null
+	pv aosc-os3_"${DE}"-"${SYSREL}"_"${PM}"_en-US.tar.xz | tar xfJ -
+	popd > /dev/null`
+
+#	Prepare chroot
+	`pushd /mnt/target > /dev/null
+	cp /etc/resolv.conf etc/
+	mount --bind /dev dev
+	mount --bind /proc proc
+	mount --bind /sys sys
+	genfstab -p /mnt/target >> /mnt/target/etc/fstab`
+	if "$EFI" == "Yes"  then
+    	`mkdir /mnt/target/efi`
+    	cmdline = "`mount " + $ESP + " /mnt/target/efi`"
+    	eval(cmdline)
+	end
+	`popd > /dev/null`
+	`fs-cache`
+	
+	puts "Configuring GRUB..."
+	if $EFI = "No" then
+ 		cmdline = "`chroot /mnt/target grub-install " + $TARGETPART + " `"
+ 		eval(cmdline)
+	elsif $EFI = "Yes" then
+    	`chroot /mnt/target grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=AOSC-GRUB `
+	end
+	`chroot /mnt/target grub-mkconfig -o /boot/grub/grub.cfg`
+	check
+	
+	`whiptail --title "AOSC OS Installation" --msgbox "Installation has successfully completed! Now we will perform some clean up. We will reboot your machine and jump right into your fresh installation of AOSC OS soon.
+
+Default username is "aosc", password is "anthon"
+Default root password is "anthon", although using sudo is recommended." 15 60  3>&1 1>&2 2>&3`
+	`pushd /mnt/target > /dev/null`
+	`umount -Rf dev proc sys`
+	`popd > /dev/null`
+	`umount -Rf /mnt/target`
+	
+	`whiptail --title "AOSC OS Installation" --msgbox "Please remove your installation media and press Enter to reboot" 3>&1 1>&2 2>&3`
+
 end
 
 # ============================================================
