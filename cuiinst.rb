@@ -248,6 +248,32 @@ end
 
 # ============================================================
 
+def netgrab
+	@options = `whiptail --title "AOSC OS Installation" --menu "Choose your mirrors to download the system" 15 60 4\
+	"http://repo.anthonos.org" "Anthon repo" \
+	"http://mirrors.anthonos.org/anthon" "Anthon Mirror" \
+	"http://mirrors.ustc.edu.cn/anthon" "USTC Mirrors" \
+	"Others" "Input your mirror"  3>&1 1>&2 2>&3`
+	if @options == "Others" then
+		@options = `whiptail --title "AOSC OS Installation" --inputbox "Please input your mirror," 15 60 "http://"`
+		$MIRRORS = @options
+	else
+		$MIRRORS = @options
+	end
+
+	`clear 3>&1 1>&2 2>&3`
+	puts "Downloading tarballs"
+	cmdline = sprintf("`wget %s/aosc-os/%s/%s 3>&1 1>&2 2>&3`", $MIRRORS, $DE.downcase, $TARBALL)
+	eval(cmdline)
+	puts "Downloading md5 signature"
+	cmdline = sprintf("`wget %s/aosc-os/%s/%s.md5sum 3>&1 1>&2 2>&3`", $MIRRORS, $DE.downcase, $TARBALL)
+	eval(cmdline)
+	puts "Checking md5"
+	cmdline = sprintf("`md5sum -c %s.md5sum`", $TARBALL)
+	eval(cmdline)
+	check
+end
+
 def install
 	puts "Root target : " + $TARGETPART
 	puts "EFI : " + $EFI
@@ -271,7 +297,19 @@ def install
 	check
 	
 #	Check tarball
-	# (I don't know what to do now)
+	puts "Checking tarballs"
+	if (`find . | grep $TARBALL`)==("./" + $TARBALL) then
+		puts "Checking md5"
+		cmdline = sprintf("`md5sum -c %s.md5sum`", $TARBALL)
+		eval(cmdline)
+		if $? != then 
+			puts "Local md5 sum failed, download from net"
+			netgrab
+		end
+	else
+		netgrab
+	end
+	
 
 #	Decompress
 	puts "Unpacking the system image..."
