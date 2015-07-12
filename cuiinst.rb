@@ -171,7 +171,7 @@ def step3_2
 		end if (@parts[j] != "NAME")#&(@sizes[j].to_f > 1000000000)
 		j += 1
 	end
-	@cmdline = "\`whiptail --title \"AOSC OS Installation\" --menu \"These partitions could be used for AOSC install, Please choose one for AOSC, If you want to re-partition the disk, press cancel\" 15 80 "
+	@cmdline = "\`whiptail --title \"AOSC OS Installation\" --menu \"These partitions could be used for AOSC install, Please choose one for AOSC, If you want to re-partition the disk, press cancel. All datas on this partition will lost.\" 15 80 "
 	@cmdline += sprintf("%d \\", f)
 	j = 0
 	for i in @partsfinal do
@@ -187,11 +187,15 @@ def step3_2
 	else
 		step3_2
 	end
+	
+	@fs = `whiptail --title "AOSC OS Installation" --menu "Which filesystem do you like to be used as the root filesystem?" 15 60 5 "ext4" "" "ext3" "" "ext2" "" "btrfs" "" "xfs" "" "jfs" "" 3>&1 1>&2 2>&3`
+	cmdline = sprintf("`mkfs.%s %s 3>&1 1>&2 2>&3`", @fs, $TARGETPART)
+	eval(cmdline)
 end
 
 def step3_3
 	@partname = `lsblk -ro NAME`
-	@partsize = `lsblk -ro SIZE`
+	@partsize = `lsblk -bro SIZE`
 	@parts = []
 	@parts = @partname.split("\n")
 	@sizes = []
@@ -206,7 +210,7 @@ def step3_3
 		begin		
 			@partsfinal[f] = j
 			f += 1
-		end if (@parts[j] != "NAME")&(@parts[j] != @diskaosc)#&(@sizes[j].to_f > 1000000000)
+		end if ((@parts[j] != "NAME")&(@parts[j] != @diskaosc)&(@sizes[j].length >= 11))
 		j += 1
 	end
 	@cmdline = "\`whiptail --title \"AOSC OS Installation\" --menu \"These partitions could be used for AOSC install, Please choose one for ESP which needed by EFI system, If you want to re-partition the disk, press cancel\" 15 80 "
@@ -219,11 +223,19 @@ def step3_3
 	end
 	@cmdline += " 3>&1 1>&2 2>&3 \`"
 	@option=eval(@cmdline)
+	
 	if $? == 0 then
 		$ESP = @option
 	else
 		install_end
 	end
+	
+	`whiptail --title "AOSC OS Installation" --yesno "Do you want to rebuild the filesystem of ESP? If you are shared ESP with other systems, you shouldn't rebuild it."`
+	if $? == 0 then
+		cmdline = sprintf("`mkfs.fat -F 32 %s 3>&1 1>&2 2>&3`", @option)
+		eval(cmdline)
+	end 
+	
 end
 
 def step3
@@ -255,7 +267,7 @@ def netgrab
 	"http://mirrors.ustc.edu.cn/anthon" "USTC Mirrors" \
 	"Others" "Input your mirror"  3>&1 1>&2 2>&3`
 	if @options == "Others" then
-		@options = `whiptail --title "AOSC OS Installation" --inputbox "Please input your mirror," 15 60 "http://"`
+		@options = `whiptail --title "AOSC OS Installation" --inputbox "Please input your mirror," 15 60 "http://" 3>&1 1>&2 2>&3`
 		$MIRRORS = @options
 	else
 		$MIRRORS = @options
@@ -298,11 +310,12 @@ def install
 	
 #	Check tarball
 	puts "Checking tarballs"
-	if (`find . | grep $TARBALL`)==("./" + $TARBALL) then
+	#==("./" + $TARBALL)
+	if (`[ -e "$TARBALL" ]`) then
 		puts "Checking md5"
 		cmdline = sprintf("`md5sum -c %s.md5sum`", $TARBALL)
 		eval(cmdline)
-		if $? != then 
+		if $? != 0 then 
 			puts "Local md5 sum failed, download from net"
 			netgrab
 		end
