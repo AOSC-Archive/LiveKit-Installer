@@ -51,13 +51,54 @@ end
 # ============================================================
 
 def learn_more_pm
-`whiptail --title "AOSC OS Installation" --msgbox "" 10 60 3>&1 1>&2 2>&3`
+`whiptail --title "AOSC OS Installation" --scrolltext "DPKG, or Debian Packages is the software at the base of the package management system in the free operating system Debian and its numerous derivatives. dpkg is used to install, remove, and provide information about \".deb\" packages.
+DPKG is known for its use in Ubuntu. Generally speaking, DPKG is more newbie friendly as it uses a simpler structure of dependencies and is usually more straight forward in dependency problem solving.
+In AOSC OS3, APT and PackageKit are the default frontends for managing DPKG-based system releases.
+RPM, or RedHad Package Manager is a package management system. 
+The name RPM variously refers to the .rpm file format, files in this format, software packaged in such files, and the package manager itself. RPM was intended primarily for Linux distributions; the file format is the baseline package format of the Linux Standard Base.
+RPM package management is famous for its specificity in library dependency and its use in RHEL (Red Hat Enterprise Linux), Fedora, and openSUSE, et al. 
+Although RPM is usually more reliable as it detects dependency problems inside of pacakges (unlike DPKG, which just reads package names), however, this feature can bring in difficulties for new users.
+In AOSC OS3, Zypper and PackageKit are the default frontends for managing RPM-based system releases." 10 60 3>&1 1>&2 2>&3`
 end
 
 # ============================================================
 
 def learn_more_de
-`whiptail --title "AOSC OS Installation" --msgbox "" 10 60 3>&1 1>&2 2>&3`
+`whiptail --title "AOSC OS Installation" --scrolltext "\
+GNOME (pronounced /ɡˈnoʊm/ or /ˈnoʊm/) is a desktop environment which 
+    is composed entirely of free and open-source software and targets to be 
+    cross-platform, i.e. run on multiple operating systems, its main focus 
+    being those based on the GNU/Linux system.
+    * GNOME needs about 1GB RAM and a dual core processor to run smoothly.
+Cinnamon is a GTK+ 3-based desktop environment. The project originally 
+    started as a fork of the GNOME Shell, i.e. a mere graphical shell. 
+    Cinnamon was initially developed by (and for) Linux Mint. 
+    * Cinnamon needs about 1GB RAM and a dual core processor to run 
+      smoothly.
+MATE (Spanish pronunciation: [ˈmate]) is a desktop environment forked 
+    from the now-unmaintained code base of GNOME 2.
+    * MATE needs about 512MB RAM to run smoothly.
+XFCE (pronounced as four individual letters ) is a free software desktop
+    environment for Unix and Unix-like platforms, such as Linux, Solaris, 
+    and BSD. It aims to be fast and lightweight, while still being visually 
+    appealing and easy to use. It consists of separately packaged compo-
+    nents that together provide the full functionality of the desktop envi-
+    ronment, but can be selected in subsets to suit user needs and 
+    preference. 
+    * XFCE needs about 512MB RAM to run smoothly.
+Unity is a graphical shell for the GNOME desktop environment developed by
+    Canonical Ltd. for its Ubuntu operating system. It was initially designed 
+    to make more efficient use of space given the limited screen sizes.
+    * Unity needs about 2GB RAM and a dual core processor to run smoothly.
+KDE is fully based on Qt technologies, and provides a significant range
+    of FOSS (Free and Open Source Software) to sum up Plasma's complete 
+    integrated experience. 
+    * KDE needs more than 2GB of RAM, dual core processor, at least Intel HD
+      Graphics (or equivalent), and about 10GB of HDD space to run.
+Kodi, formerly known as XBMC (XBox Media Center), while maintaining a 
+    small footprint, it's probably the most powerful media center solution 
+    you can find in all of the UNIX/Linux computing world. 
+" 10 60 3>&1 1>&2 2>&3`
 end
 
 # ============================================================
