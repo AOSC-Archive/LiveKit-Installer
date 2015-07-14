@@ -230,7 +230,7 @@ def step3_2
 	end
 	
 	@fs = `whiptail --title "AOSC OS Installation" --menu "Which filesystem do you like to be used as the root filesystem?" 15 60 5 "ext4" "" "ext3" "" "ext2" "" "btrfs" "" "xfs" "" "jfs" "" 3>&1 1>&2 2>&3`
-	cmdline = sprintf("`mkfs.%s %s 3>&1 1>&2 2>&3`", @fs, $TARGETPART)
+	cmdline = sprintf("`mkfs.%s -f %s 3>&1 1>&2 2>&3`", @fs, $TARGETPART)
 	eval(cmdline)
 end
 
@@ -339,14 +339,13 @@ def install
 	
 #	Mounting target	
 	puts "Mounting target"
-	cmdline = "`mount " + $TARGETPART + " /mnt/target`"
-	puts cmdline
+	cmdline = "`mount " + $TARGETPART + " /mnt/target 3>&1 1>&2 2>&3`"
 	eval(cmdline)
 	check
 
 #	Clean target
 	puts "Making sure the partition is empty..."
-	`rm -rf /mnt/target/*`
+	`rm -rf /mnt/target/* 3>&1 1>&2 2>&3`
 	check
 	
 #	Check tarball
