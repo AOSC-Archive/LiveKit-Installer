@@ -38,13 +38,10 @@ end
 def pre_install
 
 $NICK = "cyanflame"
-$DATE = "20150708"
+$DATE = "latest"
 $LANG = "en-US"
 
-`
-rm /tmp/installation-config 
-umount -Rf /mnt/target
-unset OPTFEATURES
+`umount -Rf /mnt/target
 mkdir -p /mnt/target`
 end
 
@@ -95,9 +92,6 @@ KDE is fully based on Qt technologies, and provides a significant range
     integrated experience. 
     * KDE needs more than 2GB of RAM, dual core processor, at least Intel HD
       Graphics (or equivalent), and about 10GB of HDD space to run.
-Kodi, formerly known as XBMC (XBox Media Center), while maintaining a 
-    small footprint, it's probably the most powerful media center solution 
-    you can find in all of the UNIX/Linux computing world. 
 " 10 60 3>&1 1>&2 2>&3`
 end
 
@@ -147,14 +141,13 @@ def step2
 `whiptail --title "AOSC OS Installation" --msgbox  "STEP II. Choose a Desktop Environment
 
     AOSC OS provides multiple desktop environment by default, choose one from below, and make good choices!" 10 60 3>&1 1>&2 2>&3`
-@option = `whiptail --title "AOSC OS Installation"  --menu "Choose the desktop environment of your choice" 16 74 7 \
+@option = `whiptail --title "AOSC OS Installation"  --menu "Choose the desktop environment of your choice" 16 74 6 \
 "GNOME" "Gnome-shell, stable and fancy with heavy load" \
 "Cinnamon" "A gnome-shell fork, mainly used in Linux Mint" \
 "XFCE" "Light weight but useful" \
 "MATE" "A Gnome2 fork, classical and stable" \
 "Unity" "Desktop environment designed for netbook but with heavy load" \
 "KDE" "As stable as KDE" \
-"Kodi" "Family media center" \
 "?" "Learn more about desktop environment" 3>&1 1>&2 2>&3`
 if @option == "?" then
 	learn_more_de	
