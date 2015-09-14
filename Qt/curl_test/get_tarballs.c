@@ -1,3 +1,6 @@
+/* tests how to get tarballs.
+ * build: gcc -o get_tarballs{,.c] -lcurl
+ */
 #include <stdio.h>
 #include <curl/curl.h>
 #include <string.h>

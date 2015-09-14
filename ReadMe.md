@@ -1,4 +1,4 @@
-# AOSC LiveKit
+AOSC LiveKit Installers
+=======================
 
-## Build Dependence
-libparted-dev
+Different Installers that do the same job.

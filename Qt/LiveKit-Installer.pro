@@ -8,7 +8,7 @@ lessThan(QT_VER_MAJ, 5) | lessThan(QT_VER_MIN, 3) | {
 }
 
 QT += qml quick widgets declarative core
-TARGET = LiveKit-Installer
+TARGET = liveinst-qt
 CODECFORSRC = UTF-8
 
 include(src/src.pri)
