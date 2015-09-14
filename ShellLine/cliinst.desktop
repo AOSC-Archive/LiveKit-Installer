@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=LiveKit CLI
+Comment=CLI installer for AOSC OS
+Exec=/usr/bin/cliinst
+Icon=utilities-terminal
+Terminal=true
+Type=Application
+Categories=System;
