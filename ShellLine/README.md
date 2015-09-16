@@ -10,3 +10,5 @@ fresh partial pot, use:
 for i in cliinst cliinst-*; do bash --dump-po-strings "$i"; done | msguniq -
 ```
 
+You may want to do it from some other base directories so you get better 
+reference annotations in POT files.
