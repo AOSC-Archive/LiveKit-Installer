@@ -1,0 +1,4 @@
+PM_SELECTION = \
+DPKG
+DE_SELECTION = \
+Gnome
