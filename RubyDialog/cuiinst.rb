@@ -36,11 +36,6 @@ end
 # ============================================================
 
 def pre_install
-
-$NICK = "cyanflame"
-$DATE = "latest"
-$LANG = "en-US"
-
 `umount -Rf /mnt/target
 mkdir -p /mnt/target`
 end
@@ -327,7 +322,7 @@ def install
 		puts "+	EFI target : " + $ESP
 	end
 	
-	$TARBALL = sprintf("aosc-os_%s_%s_%s_%s_%s.tar.xz", $DE.downcase, $NICK, $PM.downcase, $DATE, $LANG) 
+	$TARBALL = sprintf("aosc-os_%s_%s_latest.tar.xz", $DE.downcase,  $PM.downcase) 
 	puts "TARBALL : " + $TARBALL
 	
 #	Mounting target	
