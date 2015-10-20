@@ -1,7 +1,10 @@
-# LiveKit-CLI
-LiveKit Installer, CLI version
+NOISE
+=====
 
-## Gettext Invocation
+The Naive OS InStallEr, written in the simple language bash.
+
+Gettext Invocation
+------------------
 
 This installer uses domain `aosc-inst` in `/usr/share/locales`. To get a 
 fresh partial pot, use:
