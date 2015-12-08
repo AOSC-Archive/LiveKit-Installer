@@ -324,34 +324,31 @@ def install
 		puts "+	EFI target : " + $ESP
 	end
 	
-	$TARBALL = sprintf("aosc-os_%s_%s_latest.tar.xz", $DE.downcase,  $PM.downcase) 
-	puts "TARBALL : " + $TARBALL
-	
 #	Mounting target	
 	puts "Mounting target"
-	cmdline = "`mount " + $TARGETPART + " /mnt/target 3>&1 1>&2 2>&3`"
+	cmdline = "`mount " + $TARGETPART + " /mnt/target`"
 	eval(cmdline)
 	check
 
 #	Clean target
 	puts "Making sure the partition is empty..."
-	`rm -rf /mnt/target/* 3>&1 1>&2 2>&3`
+	`rm -rf /mnt/target/*`
 	check
 	
 #	Check tarball
-	puts "Checking tarballs"
-	#==("./" + $TARBALL)
-	if (`[ -e "$TARBALL" ]`) then
-		puts "Checking md5"
-		cmdline = sprintf("`md5sum -c %s.md5sum`", $TARBALL)
-		eval(cmdline)
-		if $? != 0 then 
-			puts "Local md5 sum failed, download from net"
-			netgrab
-		end
-	else
-		netgrab
-	end
+#	puts "Checking tarballs"
+#	#==("./" + $TARBALL)
+#	if (`[ -e "$TARBALL" ]`) then
+#		puts "Checking md5"
+#		cmdline = sprintf("`md5sum -c %s.md5sum`", $TARBALL)
+#		eval(cmdline)
+#		if $? != 0 then 
+#			puts "Local md5 sum failed, download from net"
+#			netgrab
+#		end
+#	else
+#		netgrab
+#	end
 	
 
 #	Decompress
