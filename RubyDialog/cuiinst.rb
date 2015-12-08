@@ -302,9 +302,11 @@ def netgrab
 		$MIRRORS = @options
 	end
 
+	$TARBALL = sprintf("aosc-os_%s_%s_latest.tar.xz",$DE.downcase,$PM.downcase)
+
 	`clear 3>&1 1>&2 2>&3`
 	puts "Downloading tarballs"
-	cmdline = sprintf("`wget %s/aosc-os/%s/%s 3>&1 1>&2 2>&3`", $MIRRORS, $DE.downcase, $TARBALL)
+	cmdline = sprintf("`wget %s/aosc-os/%s/%s`", $MIRRORS, $DE.downcase, $TARBALL)
 	eval(cmdline)
 	puts "Downloading md5 signature"
 	cmdline = sprintf("`wget %s/aosc-os/%s/%s.md5sum 3>&1 1>&2 2>&3`", $MIRRORS, $DE.downcase, $TARBALL)
@@ -409,6 +411,7 @@ def main
 	step2
 	step3
 	confirm
+	netgrab
 	install
 end
 
